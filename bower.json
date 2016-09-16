@@ -2,8 +2,8 @@
   "name": "ideal-postcodes-autocomplete",
   "description": "Frontend autocomplete library for entering UK addresses",
   "main": [
-    "dist/ideal-postcodes-autocomplete.js"
     "dist/ideal-postcodes-autocomplete.css",
+    "dist/ideal-postcodes-autocomplete.js"
   ],
   "authors": [
     "Ideal-Postcodes.co.uk"
