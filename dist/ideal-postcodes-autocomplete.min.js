@@ -1,6 +1,6 @@
 /**
- * ideal-postcodes-autocomplete - Frontend autocomplete library for entering UK addresses
- * @version v0.0.1
+ * ideal-postcodes-autocomplete - Frontend UK Address Autocomplete Library for Ideal Postcodes API
+ * @version v0.0.2
  * @link https://ideal-postcodes.co.uk
  * @license MIT
  */
