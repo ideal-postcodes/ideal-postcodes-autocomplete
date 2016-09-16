@@ -175,13 +175,6 @@ gulp.task("unit", done => {
 	}).start();
 });
 
-gulp.task("saucelabs", done => {
-	new KarmaServer({
-		configFile: `${__dirname}/test/config/karma.conf-saucelabs.js`,
-		singleRun: true
-	}, done).start();
-});
-
 gulp.task("browserstack", done => {
 	new KarmaServer({
 		configFile: `${__dirname}/test/config/karma.conf-browserstack.js`,
@@ -214,6 +207,15 @@ gulp.task("test", done => {
 		"compile_tests", 
 		"compile_test_build",
 		"unit",
+		done
+	);
+});
+
+gulp.task("integration", done => {
+	runSequence(
+		"lint", 
+		"compile_tests", 
+		"compile_test_build",
 		"integration",
 		done
 	);
@@ -223,7 +225,8 @@ gulp.task("ci", done => {
 	runSequence(
 		"lint",
 		"compile_test_build",
-		"browserstack", 
+		"browserstack",
+		"browserstack:integration",
 		done
 	);
 });
