@@ -6,9 +6,9 @@
 
 This library will create an autocomplete box for any input field specified and pipe the details of a selected address to input fields you designate.
 
-![Ideal Postcodes Autocomplete Example](https://raw.github.com/ideal-postcodes/ideal-postcodes-autocomplete/master/example/example.png)
-
 Usage requires an Ideal-Postcodes.co.uk API Key
+
+![Ideal Postcodes Autocomplete Example](https://raw.github.com/ideal-postcodes/ideal-postcodes-autocomplete/master/example/example.png)
 
 ## Build Status & Browser Compatibility Information
 
