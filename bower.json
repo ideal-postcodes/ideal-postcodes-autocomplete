@@ -1,0 +1,24 @@
+{
+  "name": "ideal-postcodes-autocomplete",
+  "description": "Frontend autocomplete library for entering UK addresses",
+  "main": "dist/ideal-postcodes-autocomplete.min.js",
+  "authors": [
+    "Ideal-Postcodes.co.uk"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "UK",
+    "Addresses",
+    "Autocomplete",
+    "Ideal",
+    "Postcodes"
+  ],
+  "homepage": "https://ideal-postcodes.co.uk",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

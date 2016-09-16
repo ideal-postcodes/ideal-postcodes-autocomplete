@@ -1,0 +1,16 @@
+{
+	"compilerOptions": {
+		"module": "system",
+		"target": "ES3",
+		"out": "ideal-postcodes-autocomplete.js",
+		"noEmitOnError": false
+	},
+	"files": [
+		"lib/*.ts"
+	],
+	"exclude": [
+		"test",
+		"node_modules",
+		"dist"
+	]
+}
