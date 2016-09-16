@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="0"
+            failures="1"
+            tests="9">
+
+  <testsuite name="navigation.integration"
+    errors="0" failures="1" hostname="" id="" package="navigation.integration" skipped="7"
+    tests="9" time="21.73" timestamp="Tue, 13 Sep 2016 22:52:19 GMT">
+  
+    <testcase name="Load autocomplete" time="8.599" assertions="6">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="Retrieve suggestions" time="13.13" assertions="1">  <failure message="Expected element &lt;ul.idpc_ul&gt; to be visible in 2000ms">    at Object.&lt;anonymous&gt; (/Users/cablanchard/Developer/node/ideal-postcodes-autocomplete/test/navigation.integration.js:24:23)</failure>
+
+    
+    </testcase>
+  
+  
+    
+    <testcase
+      name="Scrolling down">
+      <skipped />
+    </testcase>
+    
+    <testcase
+      name="Scrolling up">
+      <skipped />
+    </testcase>
+    
+    <testcase
+      name="Escape button">
+      <skipped />
+    </testcase>
+    
+    <testcase
+      name="Clicking other areas">
+      <skipped />
+    </testcase>
+    
+    <testcase
+      name="Focus">
+      <skipped />
+    </testcase>
+    
+    <testcase
+      name="Blur">
+      <skipped />
+    </testcase>
+    
+    <testcase
+      name="End">
+      <skipped />
+    </testcase>
+    
+  
+  </testsuite>
+</testsuites>

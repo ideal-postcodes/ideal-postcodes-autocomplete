@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Ideal Postcodes Core Example</title>
+		<script src="../dist/ideal-postcodes-autocomplete.js"></script>
+		<link rel="stylesheet" type="text/css" href="../../css/ideal-postcodes-autocomplete.css" />
+		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+	</head>
+	<body>
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12">
+					<h1>Ideal Postcodes Autocomplete</h1>
+					<hr />
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="form-group">
+						<label>Address Search</label>
+						<input type="text" class="form-control" id="input" />
+					</div>
+					<hr />
+				</div>
+				<div class="col-xs-12">
+					<div class="form-group">
+						<label>Line 1</label>
+						<input type="text" class="form-control" id="line_1" />
+						<label>Line 2</label>
+						<input type="text" class="form-control" id="line_2" />
+						<label>Line 3</label>
+						<input type="text" class="form-control" id="line_3" />
+						<label>Post Town</label>
+						<input type="text" class="form-control" id="post_town" />
+						<label>Postcode</label>
+						<input type="text" class="form-control" id="postcode" />
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			var controller = new IdealPostcodes.Autocomplete.Controller({
+				api_key: "iddqd",
+				inputField: "#input",
+				outputFields: {
+					line_1: "#line_1",
+					line_2: "#line_2",
+					line_3: "#line_3",
+					post_town: "#post_town",
+					postcode: "#postcode"
+				}
+			});
+		</script>
+	</body>
+</html>

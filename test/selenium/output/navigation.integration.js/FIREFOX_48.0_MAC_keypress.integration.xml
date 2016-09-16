@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="0"
+            failures="0"
+            tests="8">
+
+  <testsuite name="keypress.integration"
+    errors="0" failures="0" hostname="" id="" package="keypress.integration" skipped="0"
+    tests="8" time="18.76" timestamp="Tue, 13 Sep 2016 19:30:41 GMT">
+  
+    <testcase name="Load autocomplete" time="10.50" assertions="6">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="Input first character" time="0.5750" assertions="1">
+
+    
+    </testcase>
+  
+    <testcase name="Input second character" time="0.9500" assertions="1">
+
+    
+    </testcase>
+  
+    <testcase name="Press down key" time="0.3670" assertions="1">
+
+    
+    </testcase>
+  
+    <testcase name="Press down key again" time="0.5310" assertions="2">
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="Press up key" time="0.5170" assertions="2">
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="Select address" time="0.8480" assertions="4">
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="End" time="4.471" assertions="0">
+    </testcase>
+  
+  
+  </testsuite>
+</testsuites>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="0"
+            failures="1"
+            tests="8">
+
+  <testsuite name="keypress.integration"
+    errors="0" failures="1" hostname="" id="" package="keypress.integration" skipped="5"
+    tests="8" time="3.846" timestamp="Wed, 14 Sep 2016 08:05:59 GMT">
+  
+    <testcase name="Load autocomplete" time="1.439" assertions="6">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="Input first character" time="0.2780" assertions="1">
+
+    
+    </testcase>
+  
+    <testcase name="Input second character" time="2.129" assertions="1">  <failure message="Expected element &lt;ul.idpc_ul&gt; to be visible in 2000ms">    at Object.&lt;anonymous&gt; (/Users/cablanchard/Developer/node/ideal-postcodes-autocomplete/test/keypress.integration.js:31:23)
+    at endReadableNT (_stream_readable.js:905:12)</failure>
+
+    
+    </testcase>
+  
+  
+    
+    <testcase
+      name="Press down key">
+      <skipped />
+    </testcase>
+    
+    <testcase
+      name="Press down key again">
+      <skipped />
+    </testcase>
+    
+    <testcase
+      name="Press up key">
+      <skipped />
+    </testcase>
+    
+    <testcase
+      name="Select address">
+      <skipped />
+    </testcase>
+    
+    <testcase
+      name="End">
+      <skipped />
+    </testcase>
+    
+  
+  </testsuite>
+</testsuites>

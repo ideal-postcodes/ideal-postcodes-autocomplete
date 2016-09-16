@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="1"
+            failures="0"
+            tests="1">
+
+  <testsuite name="autocomplete.integration"
+    errors="1" failures="0" hostname="" id="" package="autocomplete.integration" skipped="0"
+    tests="1" time="0.02500" timestamp="Tue, 13 Sep 2016 10:37:03 GMT">
+  
+    <testcase name="Trigger autocomplete" time="0.02500" assertions="0">
+    </testcase>
+      <system-err>
+          Error while running [Autocomplete Integration / Trigger autocomplete]:
+
+  ReferenceError: __filname is not defined
+    at /Users/cablanchard/Developer/node/ideal-postcodes-autocomplete/test/autocomplete.integration.js:9:18
+    at Object.module.exports.Trigger autocomplete.browser [as Trigger autocomplete] (/Users/cablanchard/Developer/node/ideal-postcodes-autocomplete/test/autocomplete.integration.js:29:23)
+    at Module.call (/Users/cablanchard/Developer/node/ideal-postcodes-autocomplete/node_modules/nightwatch/lib/runner/module.js:62:34)
+    at /Users/cablanchard/Developer/node/ideal-postcodes-autocomplete/node_modules/nightwatch/lib/runner/testcase.js:70:29
+    at _fulfilled (/Users/cablanchard/Developer/node/ideal-postcodes-autocomplete/node_modules/q/q.js:834:54)
+    at self.promiseDispatch.done (/Users/cablanchard/Developer/node/ideal-postcodes-autocomplete/node_modules/q/q.js:863:30)
+    at Promise.promise.promiseDispatch (/Users/cablanchard/Developer/node/ideal-postcodes-autocomplete/node_modules/q/q.js:796:13)
+    at /Users/cablanchard/Developer/node/ideal-postcodes-autocomplete/node_modules/q/q.js:556:49
+    at runSingle (/Users/cablanchard/Developer/node/ideal-postcodes-autocomplete/node_modules/q/q.js:137:13)
+    at flush (/Users/cablanchard/Developer/node/ideal-postcodes-autocomplete/node_modules/q/q.js:125:13)
+    at doNTCallback0 (node.js:419:9)
+    at process._tickCallback (node.js:348:13)
+      </system-err>
+  
+  
+  </testsuite>
+</testsuites>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="0"
+            failures="1"
+            tests="5">
+
+  <testsuite name="mouseselection.integration"
+    errors="0" failures="1" hostname="" id="" package="mouseselection.integration" skipped="2"
+    tests="5" time="20.84" timestamp="Tue, 13 Sep 2016 19:30:59 GMT">
+  
+    <testcase name="Load autocomplete" time="8.998" assertions="6">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="Input first character" time="0.5660" assertions="1">
+
+    
+    </testcase>
+  
+    <testcase name="Input second character" time="11.27" assertions="1">  <failure message="Expected element &lt;ul.idpc_ul&gt; to be visible in 2000ms">    at Object.&lt;anonymous&gt; (/Users/cablanchard/Developer/node/ideal-postcodes-autocomplete/test/mouseselection.integration.js:31:23)
+    at endReadableNT (_stream_readable.js:905:12)</failure>
+
+    
+    </testcase>
+  
+  
+    
+    <testcase
+      name="Click on address">
+      <skipped />
+    </testcase>
+    
+    <testcase
+      name="End">
+      <skipped />
+    </testcase>
+    
+  
+  </testsuite>
+</testsuites>

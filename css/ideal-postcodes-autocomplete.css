@@ -1,0 +1,48 @@
+[hidden] { display: none; }
+
+div.idpc_autocomplete {
+	position: relative;
+}
+
+div.idpc_autocomplete > input {
+	display: block;
+}
+
+div.idpc_autocomplete > ul {
+	position: absolute;
+	left: 0;
+	z-index: 1;
+	min-width: 100%;
+	box-sizing: border-box;
+	list-style: none;
+	padding: 0;
+	border-radius: .3em;
+	margin: .2em 0 0;
+	background: #FFFFFF;
+	border: 1px solid rgba(0,0,0,.3);
+	box-shadow: .05em .2em .6em rgba(0,0,0,.2);
+	text-shadow: none;
+	max-height: 250px;
+	overflow-y: scroll;
+}
+
+div.idpc_autocomplete > ul > li {
+	position: relative;
+	padding: .2em .5em;
+	cursor: pointer;
+}
+
+div.idpc_autocomplete > ul > li:hover {
+	background: #B8D3E0;
+	color: black;
+}
+
+div.idpc_autocomplete > ul > li.idpc_error {
+	font-size: 90%;
+	background-color: #CCC;
+}
+
+div.idpc_autocomplete > ul > li[aria-selected="true"] {
+	background: #3D6D8F;
+	color: white;
+}

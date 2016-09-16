@@ -1,0 +1,1 @@
+@supports (transform:scale(0)){div.idpc_autocomplete>ul{transition:.3s cubic-bezier(.4,.2,.5,1.4);transform-origin:1.43em -.43em}div.idpc_autocomplete>ul:empty,div.idpc_autocomplete>ul[hidden]{opacity:0;transform:scale(0);display:block;transition-timing-function:ease}}
