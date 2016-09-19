@@ -84,7 +84,9 @@ namespace Autocomplete {
 		// Checks if key is usable (if enabled). Otherwise attaches interface to DOM
 		initialiseInterface(options: ControllerOptions): void {
 			if (this.checkKey) {
-				this.client.checkKeyUsability((error, response) => {
+				const checkOptions: IdealPostcodes.BasicOptions = {};
+				if (this.options.licensee) checkOptions["licensee"] = this.options.licensee;
+				this.client.checkKeyUsability(checkOptions, (error, response) => {
 					if (response.available) {
 						this.attachInterface(options);
 					} else {
