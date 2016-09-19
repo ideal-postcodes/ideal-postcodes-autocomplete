@@ -152,7 +152,7 @@ gulp.task("start_browserstack_integration", done => {
   });
 });
 
-gulp.task("integration", done => {
+gulp.task("local_integration", done => {
   Nightwatch.cli(argv => {
   	argv.config = "test/config/nightwatch.local.js";
     Nightwatch.CliRunner(argv)
@@ -216,7 +216,7 @@ gulp.task("integration", done => {
 		"lint", 
 		"compile_tests", 
 		"compile_test_build",
-		"integration",
+		"local_integration",
 		done
 	);
 });
