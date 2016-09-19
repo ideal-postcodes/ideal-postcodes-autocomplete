@@ -1,6 +1,6 @@
 /**
  * ideal-postcodes-autocomplete - Frontend UK Address Autocomplete Library for Ideal Postcodes API
- * @version v0.0.2
+ * @version v0.1.0
  * @link https://ideal-postcodes.co.uk
  * @license MIT
  */
@@ -918,9 +918,10 @@ var IdealPostcodes;
                 return callback(null, data.result, xhr);
             });
         };
-        Client.prototype.checkKeyUsability = function (callback) {
+        Client.prototype.checkKeyUsability = function (options, callback) {
             IdealPostcodes.Transport.request({
-                url: this.apiUrl() + "/keys/" + this.api_key
+                url: this.apiUrl() + "/keys/" + this.api_key,
+                queryString: constructQuery(options)
             }, function (error, data, xhr) {
                 if (error)
                     return callback(error, null, xhr);
@@ -971,7 +972,7 @@ var Autocomplete;
         Controller.prototype.configureApiRequests = function (options) {
             var _this = this;
             this.options = {};
-            var basicOptions = ["api_key", "licensee", "filter", "tags"];
+            var basicOptions = ["licensee", "filter", "tags"];
             basicOptions.forEach(function (basicOption) {
                 if (options[basicOption] !== undefined) {
                     _this.options[basicOption] = options[basicOption];
@@ -1008,7 +1009,7 @@ var Autocomplete;
         Controller.prototype.initialiseInterface = function (options) {
             var _this = this;
             if (this.checkKey) {
-                this.client.checkKeyUsability(function (error, response) {
+                this.client.checkKeyUsability(this.options, function (error, response) {
                     if (response.available) {
                         _this.attachInterface(options);
                     }
@@ -1049,15 +1050,14 @@ var Autocomplete;
                     }
                     self.populateAddress(address);
                 };
+                var options = IdealPostcodes.Utils.extend({}, this.options);
                 if (suggestion.umprn) {
-                    self.client.lookupUmprn({
-                        id: suggestion.umprn
-                    }, callback);
+                    options["id"] = suggestion.umprn;
+                    self.client.lookupUmprn(options, callback);
                 }
                 else {
-                    self.client.lookupUdprn({
-                        id: suggestion.udprn
-                    }, callback);
+                    options["id"] = suggestion.udprn;
+                    self.client.lookupUdprn(options, callback);
                 }
             };
         };
