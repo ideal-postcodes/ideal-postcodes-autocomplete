@@ -31,7 +31,7 @@ describe("Controller", () => {
 			expect(controller.checkKey).toEqual(false);
 			expect(controller.inputField).toEqual("#input");
 			expect(controller.removeOrganisation).toEqual(false);
-			expect(controller.options.api_key).toEqual(test_api_key);
+			expect(controller.client.api_key).toEqual(test_api_key);
 		});
 
 		it ("creates an Ideal Postcodes client", () => {

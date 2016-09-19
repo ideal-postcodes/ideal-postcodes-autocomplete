@@ -44,7 +44,7 @@ namespace Autocomplete {
 		// Applies client configuration
 		configureApiRequests(options: IdealPostcodes.BasicOptions): void {
 			this.options = {};
-			const basicOptions = ["api_key", "licensee", "filter", "tags"];
+			const basicOptions = ["licensee", "filter", "tags"];
 			basicOptions.forEach(basicOption => {
 				if (options[basicOption] !== undefined) {
 					this.options[basicOption] = options[basicOption];
@@ -84,9 +84,7 @@ namespace Autocomplete {
 		// Checks if key is usable (if enabled). Otherwise attaches interface to DOM
 		initialiseInterface(options: ControllerOptions): void {
 			if (this.checkKey) {
-				const checkOptions: IdealPostcodes.BasicOptions = {};
-				if (this.options.licensee) checkOptions["licensee"] = this.options.licensee;
-				this.client.checkKeyUsability(checkOptions, (error, response) => {
+				this.client.checkKeyUsability(this.options, (error, response) => {
 					if (response.available) {
 						this.attachInterface(options);
 					} else {
@@ -115,7 +113,7 @@ namespace Autocomplete {
 				self.onAddressSelected.call(this, suggestion);
 				self.interface.setMessage(); // Clear message
 
-				const callback = (error, address) => {
+				const callback: IdealPostcodes.XhrCallback = (error, address) => {
 					if (error) {
 						self.interface.setMessage("Unable to retrieve your address. Please enter your address manually");
 						return self.onSearchError(error);
@@ -127,14 +125,14 @@ namespace Autocomplete {
 					self.populateAddress(address);
 				};
 
+				const options: IdealPostcodes.LookupIdOptions = IdealPostcodes.Utils.extend({}, this.options);
+
 				if (suggestion.umprn) {
-					self.client.lookupUmprn({
-						id: suggestion.umprn
-					}, callback);
+					options["id"] = suggestion.umprn;
+					self.client.lookupUmprn(options, callback);
 				} else {
-					self.client.lookupUdprn({
-						id: suggestion.udprn
-					}, callback);
+					options["id"] = suggestion.udprn;
+					self.client.lookupUdprn(options, callback);
 				}
 			};
 		}

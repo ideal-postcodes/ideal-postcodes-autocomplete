@@ -5,3 +5,7 @@
 
 ## [0.0.2] - 2016-09-16
 - Fix bower.json
+
+## [0.1.0] - 2016-09-19
+- Enable licensee checking for key usability
+- Enable tagging, licensee checking and filtering on address ID lookup
