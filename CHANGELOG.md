@@ -9,3 +9,7 @@
 ## [0.1.0] - 2016-09-19
 - Enable licensee checking for key usability
 - Enable tagging, licensee checking and filtering on address ID lookup
+
+## [0.1.1] - 2016-10-05
+- Prevent interface attaching if it already exists
+- CSS fix for .hidden dropdown

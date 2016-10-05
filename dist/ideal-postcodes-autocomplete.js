@@ -1,6 +1,6 @@
 /**
  * ideal-postcodes-autocomplete - Frontend UK Address Autocomplete Library for Ideal Postcodes API
- * @version v0.1.0
+ * @version v0.1.1
  * @link https://ideal-postcodes.co.uk
  * @license MIT
  */
@@ -1064,6 +1064,8 @@ var Autocomplete;
         // Adds interface to DOM and applies necessary callbacks
         Controller.prototype.attachInterface = function (options) {
             var _this = this;
+            if (this.interface)
+                return;
             var self = this;
             var interfaceConfig = {
                 inputField: options.inputField,
@@ -1092,6 +1094,7 @@ var Autocomplete;
             if (!this.interface)
                 return;
             this.interface.detach();
+            this.interface = null;
         };
         Controller.prototype.populateAddress = function (address) {
             // TODO: Downcase post town

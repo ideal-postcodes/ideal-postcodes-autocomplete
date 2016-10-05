@@ -1,6 +1,6 @@
 {
   "name": "ideal-postcodes-autocomplete",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Frontend UK Address Autocomplete Library for Ideal Postcodes API",
   "main": "dist/ideal-postcodes-autocomplete.min.js",
   "scripts": {
@@ -58,6 +58,7 @@
     "karma-sauce-launcher": "~1.0.0",
     "lodash": "~4.13.1",
     "nightwatch": "~0.9.8",
+    "optimist": "~0.6.1",
     "run-sequence": "~1.2.1",
     "tslint": "~3.10.2"
   },
