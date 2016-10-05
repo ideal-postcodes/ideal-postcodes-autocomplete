@@ -5,9 +5,7 @@ const pkg = require("../../package.json");
 const defaults = require("./karma.default.js");
 const username = process.env.BROWSERSTACK_USERNAME;
 const accessKey = process.env.BROWSERSTACK_ACCESS_KEY;
-const customLaunchers = {
-  "OSX_Chrome": require("./platforms.browserstack.js")["OSX_Chrome"]
-};
+const customLaunchers = require("./platforms.browserstack.js");
 
 module.exports = config => {
   config.set(_.extend(defaults, {
