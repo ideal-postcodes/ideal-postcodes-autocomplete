@@ -1,3 +1,5 @@
-const isHidden = node => {
-	return node.className.split(" ").some(c => c === "hidden");
+const isHidden = function (node) {
+	return node.className.split(" ").some(function (c) {
+		return c === "hidden"
+	});
 };
