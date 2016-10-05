@@ -1,11 +1,19 @@
 "use strict";
 
 const _ = require("lodash");
+const argv = require('optimist').argv;
 const pkg = require("../../package.json");
 const defaults = require("./karma.default.js");
 const username = process.env.BROWSERSTACK_USERNAME;
 const accessKey = process.env.BROWSERSTACK_ACCESS_KEY;
-const customLaunchers = require("./platforms.browserstack.js");
+const platforms = require("./platforms.browserstack.js");
+
+let launchers = {};
+if (argv.b) {
+  argv.b.split(",").forEach(p => launchers[p] = platforms[p]);
+} else {
+  launchers = platforms;
+}
 
 module.exports = config => {
   config.set(_.extend(defaults, {
@@ -17,8 +25,8 @@ module.exports = config => {
       build: `${Date.now()}-${pkg.version}`
     },
     captureTimeout: 120000,
-    customLaunchers: customLaunchers,
-    browsers: Object.keys(customLaunchers),
+    customLaunchers: launchers,
+    browsers: Object.keys(launchers),
     singleRun: true
   }));
 };
