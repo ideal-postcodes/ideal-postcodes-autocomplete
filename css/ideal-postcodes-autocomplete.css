@@ -1,4 +1,6 @@
-[hidden] { display: none; }
+.idpc_ul.hidden { 
+	display: none;
+}
 
 div.idpc_autocomplete {
 	position: relative;
