@@ -1,4 +1,4 @@
-[![npm version](https://badge.fury.io/js/ideal-postcodes-autocomplete.svg)](https://badge.fury.io/js/ideal-postcodes-autocomplete) 
+[![npm version](https://badge.fury.io/js/ideal-postcodes-autocomplete.svg)](https://badge.fury.io/js/ideal-postcodes-autocomplete) ![gzip file size](http://img.badgesize.io/ideal-postcodes/ideal-postcodes-autocomplete/master/dist/ideal-postcodes-autocomplete.min.js.svg?compression=gzip) ![file size](http://img.badgesize.io/ideal-postcodes/ideal-postcodes-autocomplete/master/dist/ideal-postcodes-autocomplete.min.js.svg)
 
 # Ideal Postcodes Autocomplete - Frontend Address Autocomplete Library
 
