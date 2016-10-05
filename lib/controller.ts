@@ -139,6 +139,7 @@ namespace Autocomplete {
 
 		// Adds interface to DOM and applies necessary callbacks
 		attachInterface(options: ControllerOptions): void {
+			if (this.interface) return;
 			const self = this;
 			const interfaceConfig = {
 				inputField: options.inputField,
@@ -169,6 +170,7 @@ namespace Autocomplete {
 		detachInterface(): void {
 			if (!this.interface) return;
 			this.interface.detach();
+			this.interface = null;
 		}
 
 		populateAddress(address: AddressFields): void {
