@@ -19,6 +19,17 @@ const server = require("gulp-server-livereload");
 const browserstack = require("browserstack-local");
 const platforms = require("./test/config/platforms.browserstack.js");
 
+/*
+ * Commands
+ *
+ * $ gulp - lint, test and generate new build
+ * $ gulp webserver - launch test webserver
+ * $ gulp test - launch local unit tests
+ * $ gulp integration - launch local integration tests
+ * $ gulp ci - launch multi-platform cloud integration tests
+ *
+ */
+
 const paths = {
 	tscripts : { 
 		src : tsconfig.files,
@@ -175,7 +186,7 @@ gulp.task("unit", done => {
 	}).start();
 });
 
-gulp.task("browserstack", done => {
+gulp.task("browserstack:unit", done => {
 	new KarmaServer({
 		configFile: `${__dirname}/test/config/karma.conf-browserstack.js`,
 		singleRun: true
@@ -225,7 +236,7 @@ gulp.task("ci", done => {
 	runSequence(
 		"lint",
 		"compile_test_build",
-		"browserstack",
+		"browserstack:unit",
 		"browserstack:integration",
 		done
 	);
