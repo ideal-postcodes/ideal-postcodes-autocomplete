@@ -26,7 +26,7 @@ const platforms = require("./test/config/platforms.browserstack.js");
  * $ gulp webserver - launch test webserver
  * $ gulp test - launch local unit tests
  * $ gulp integration - launch local integration tests
- * $ gulp ci - launch multi-platform cloud integration tests
+ * $ gulp ci - launch multi-platform cloud unit & integration tests
  *
  */
 
