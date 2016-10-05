@@ -4,6 +4,7 @@ const _ = require("lodash");
 const gulp = require("gulp");
 const tsc = require("gulp-tsc");
 const babel = require("gulp-babel");
+const argv = require('optimist').argv;
 const concat = require("gulp-concat");
 const pkg = require("./package.json");
 const tslint = require("gulp-tslint");
@@ -153,20 +154,26 @@ gulp.task("open_browserstack_tunnel", done => {
 });
 
 gulp.task("start_browserstack_integration", done => {
-  Nightwatch.cli(argv => {
-  	argv.config = "test/config/nightwatch.browserstack.js";
-  	argv.env = Object.keys(platforms).join(",");
-  	argv.e = Object.keys(platforms).join(",");
-    Nightwatch.CliRunner(argv)
+  Nightwatch.cli(args => {
+  	let launchers = {};
+		if (argv.b) {
+		  argv.b.split(",").forEach(p => launchers[p] = platforms[p]);
+		} else {
+		  launchers = platforms;
+		}
+  	args.config = "test/config/nightwatch.browserstack.js";
+  	args.env = Object.keys(launchers).join(",");
+  	args.e = Object.keys(launchers).join(",");
+    Nightwatch.CliRunner(args)
     	.setup(null, done)
 			.runTests(null, done);
   });
 });
 
 gulp.task("local_integration", done => {
-  Nightwatch.cli(argv => {
-  	argv.config = "test/config/nightwatch.local.js";
-    Nightwatch.CliRunner(argv)
+  Nightwatch.cli(args => {
+  	args.config = "test/config/nightwatch.local.js";
+    Nightwatch.CliRunner(args)
     	.setup(null, done)
 			.runTests(null, done);
   });
