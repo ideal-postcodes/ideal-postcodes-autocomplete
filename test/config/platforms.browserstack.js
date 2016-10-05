@@ -29,7 +29,7 @@ module.exports = {
 		base: "BrowserStack",
 		browser: "Safari",
 		os: "OS X",
-		os_version: "Mountian Lion",
+		os_version: "Mountain Lion",
 		browser_version: "6.2"
 	},
 	"Safari_7": {
