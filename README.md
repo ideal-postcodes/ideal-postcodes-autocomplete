@@ -1,4 +1,4 @@
-[![npm version](https://badge.fury.io/js/ideal-postcodes-autocomplete.svg)](https://badge.fury.io/js/ideal-postcodes-autocomplete) ![gzip file size](http://img.badgesize.io/ideal-postcodes/ideal-postcodes-autocomplete/master/dist/ideal-postcodes-autocomplete.min.js.svg?compression=gzip) ![file size](http://img.badgesize.io/ideal-postcodes/ideal-postcodes-autocomplete/master/dist/ideal-postcodes-autocomplete.min.js.svg)
+![BrowserStack Status](https://www.browserstack.com/automate/badge.svg?badge_key=d2RacFVWam1FSmd3UVBualZLUUR5VFIyWFpJNmIzcExCYzYxaTdoZmRGcz0tLThvWmptN0tJOXU4TDdLNUk4MWNqR0E9PQ==--9a8c9ba61a959635117c954808b1d6dbd35dc662) [![npm version](https://badge.fury.io/js/ideal-postcodes-autocomplete.svg)](https://badge.fury.io/js/ideal-postcodes-autocomplete) ![gzip file size](http://img.badgesize.io/ideal-postcodes/ideal-postcodes-autocomplete/master/dist/ideal-postcodes-autocomplete.min.js.svg?compression=gzip) ![file size](http://img.badgesize.io/ideal-postcodes/ideal-postcodes-autocomplete/master/dist/ideal-postcodes-autocomplete.min.js.svg)
 
 # Ideal Postcodes Autocomplete - Frontend Address Autocomplete Library
 
