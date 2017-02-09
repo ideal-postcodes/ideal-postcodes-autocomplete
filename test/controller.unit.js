@@ -273,6 +273,77 @@ describe("Controller", () => {
 		});
 	});
 
+	describe(".setSearchFilter", () => {
+		let controller, config;
+
+		beforeEach(() => {
+			loadFixtures("basic.html");
+			installAjax();
+			config = {
+				api_key: test_api_key,
+				inputField: "#input",
+				outputFields: {
+					line_1: "#line_1",
+					line_2: "#line_2",
+					line_3: "#line_3",
+					post_town: "#post_town",
+					postcode: "#postcode,#postcode2"
+				}
+			};
+			controller = new IdealPostcodes.Autocomplete.Controller(config);
+		});
+
+		afterEach(uninstallAjax);
+
+		it ("stores filterable attributes", () => {
+			expect(controller.searchFilters).toEqual({});
+			const postcode_outward = ["foo"];
+			const post_town = ["bar","baz"];
+			const qux = ["quux"];
+			controller.setSearchFilter({
+				postcode_outward: postcode_outward,
+				post_town: post_town
+			});
+			expect(controller.searchFilters.postcode_outward).toEqual(postcode_outward);
+			expect(controller.searchFilters.post_town).toEqual(post_town);
+		});
+
+		it ("filters subsequent API requests", done => {
+			const postcode_outward = ["sw1a"];
+			const post_town = ["bar","baz"];
+			let request;
+			controller = new IdealPostcodes.Autocomplete.Controller({
+				api_key: test_api_key,
+				inputField: "#input",
+				onSuggestionsRetrieved: suggestions => {
+					if (stubAjax) {
+						const request = parseUrl(jasmine.Ajax.requests.mostRecent().url);
+						expect(request.query.postcode_outward)
+							.toEqual(postcode_outward.join(","));
+						expect(request.query.post_town).toEqual(post_town.join(","));
+					}
+					done();
+				}
+			});
+			controller.setSearchFilter({
+				postcode_outward: postcode_outward,
+				post_town: post_town
+			});
+
+			const cb = controller._onInterfaceInput();
+
+			cb.call({
+				input: {
+					value: "10 downing stree"
+				}
+			});
+
+			setTimeout(() => {
+				expectResponse(responses.autocomplete.results);
+			}, 250);
+		});
+	});
+
 	describe("Address Population", () => {
 		let controller, config, address;
 
