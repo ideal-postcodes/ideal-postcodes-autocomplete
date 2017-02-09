@@ -29,6 +29,7 @@ namespace Autocomplete {
 		public onInput: (event: Event) => void;
 		public removeOrganisation: boolean;
 		public checkKey: boolean;
+		public searchFilters: IdealPostcodes.SearchFilters;
 
 		constructor(options: ControllerOptions) {
 			this.inputField = options.inputField;
@@ -44,8 +45,8 @@ namespace Autocomplete {
 		// Applies client configuration
 		configureApiRequests(options: IdealPostcodes.BasicOptions): void {
 			this.options = {};
-			const basicOptions = ["licensee", "filter", "tags"];
-			basicOptions.forEach(basicOption => {
+			this.searchFilters = {};
+			Autocomplete.validClientOptions.forEach(basicOption => {
 				if (options[basicOption] !== undefined) {
 					this.options[basicOption] = options[basicOption];
 				}
@@ -54,6 +55,10 @@ namespace Autocomplete {
 
 		initialiseClient(options: IdealPostcodes.ClientOptions): void {
 			this.client = new IdealPostcodes.Client(options);
+		}
+
+		setSearchFilter(options: IdealPostcodes.SearchFilters): void {
+			this.searchFilters = options;
 		}
 
 		initialiseOutputFields(outputFields: AddressFields): void {
@@ -102,7 +107,13 @@ namespace Autocomplete {
 			return function (event: Event): any {
 				if (self.onInput) self.onInput(event);
 				self.interface.setMessage(); // Clear any messages
-				self.client.autocompleteAddress({ query: this.input.value });
+				const options = { query: this.input.value };
+				Autocomplete.validSearchFilters.forEach(filter => {
+					if (self.searchFilters[filter]) {
+						options[filter] = self.searchFilters[filter];
+					}
+				});
+				self.client.autocompleteAddress(options);
 			};
 		}
 

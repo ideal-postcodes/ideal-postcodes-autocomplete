@@ -5,6 +5,9 @@
 /// <reference path="../node_modules/ideal-postcodes-core/lib/client/client.ts" />
 
 namespace Autocomplete {
+	export const validClientOptions = ["licensee", "filter", "tags"];
+	export const validSearchFilters = ["postcode_outward", "post_town"];
+
 	export interface Suggestion {
 		suggestion: string;
 		urls: {
