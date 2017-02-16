@@ -18,7 +18,7 @@ namespace Autocomplete {
 		public interface: Autocomplete.Interface;
 		public onLoaded: () => void;
 		public onFailedCheck: () => void;
-		public onSuggestionsRetrieved: (suggestion: Suggestion[]) => void;
+		public onSuggestionsRetrieved: (suggestion: Suggestion[], options: IdealPostcodes.LookupAutocompleteOptions) => void;
 		public onAddressSelected: (suggestion: Suggestion) => void;
 		public onAddressRetrieved: (address: AddressFields) => void;
 		public onSearchError: (error: Error) => void;
@@ -30,6 +30,8 @@ namespace Autocomplete {
 		public removeOrganisation: boolean;
 		public checkKey: boolean;
 		public searchFilters: IdealPostcodes.SearchFilters;
+		public requestIdCounter: number = 0;
+		public lastRequestId: number = 0;
 
 		constructor(options: ControllerOptions) {
 			this.inputField = options.inputField;
@@ -107,7 +109,11 @@ namespace Autocomplete {
 			return function (event: Event): any {
 				if (self.onInput) self.onInput(event);
 				self.interface.setMessage(); // Clear any messages
-				const options = { query: this.input.value };
+				self.requestIdCounter += 1;
+				const options: AutocompleteOptions = { 
+					query: this.input.value, 
+					_id: self.requestIdCounter 
+				};
 				Autocomplete.validSearchFilters.forEach(filter => {
 					if (self.searchFilters[filter]) {
 						options[filter] = self.searchFilters[filter];
@@ -165,14 +171,20 @@ namespace Autocomplete {
 
 			self.interface = new Autocomplete.Interface(interfaceConfig);
 
-			self.client.registerAutocompleteCallback((error, response) => {
+			self.client.registerAutocompleteCallback((error, response, xhr, options) => {
 				if (error) {
 					self.interface.setMessage("Unable to retrieve address suggestions. Please enter your address manually");
 					return self.onSearchError(error);
 				}
 				const suggestions = response.hits;
-				this.onSuggestionsRetrieved.call(this, suggestions);
-				self.interface.setSuggestions(suggestions);
+				this.onSuggestionsRetrieved.call(this, suggestions, options);
+				if (!options || (options as AutocompleteOptions)._id === undefined) {
+					return self.interface.setSuggestions(suggestions);
+				}
+				if ((options as AutocompleteOptions)._id > self.lastRequestId) {
+					self.lastRequestId = options["_id"];
+					self.interface.setSuggestions(suggestions);
+				}
 			});
 
 			this.onLoaded.call(this);

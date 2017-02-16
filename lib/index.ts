@@ -31,6 +31,10 @@ namespace Autocomplete {
 		inputField: string;
 	}
 
+	export interface AutocompleteOptions extends IdealPostcodes.LookupAutocompleteOptions {
+		_id?: number;
+	}
+
 	export interface AddressFields {
 		postcode?: string|[string];
 		postcode_inward?: string|[string];

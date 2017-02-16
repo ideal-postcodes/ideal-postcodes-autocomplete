@@ -125,12 +125,17 @@ describe("Controller", () => {
 			afterEach(uninstallAjax);
 
 			it ("is invoked when suggestions retrieved", done => {
+				const query = "foo";
 				controller = new IdealPostcodes.Autocomplete.Controller({
 					api_key: test_api_key,
 					inputField: "#input",
-					onSuggestionsRetrieved: done
+					onSuggestionsRetrieved: (suggestions, options) => {
+						expect(suggestions.length > 0).toEqual(true);
+						expect(options.query).toEqual(query);
+						done();
+					}
 				});
-				controller.client.autocompleteAddress({ query: "foo" });
+				controller.client.autocompleteAddress({ query: query });
 				setTimeout(() => {
 					expectResponse(responses.autocomplete.results);
 				}, 250);
@@ -311,7 +316,6 @@ describe("Controller", () => {
 		it ("filters subsequent API requests", done => {
 			const postcode_outward = ["sw1a"];
 			const post_town = ["bar","baz"];
-			let request;
 			controller = new IdealPostcodes.Autocomplete.Controller({
 				api_key: test_api_key,
 				inputField: "#input",
@@ -331,12 +335,7 @@ describe("Controller", () => {
 			});
 
 			const cb = controller._onInterfaceInput();
-
-			cb.call({
-				input: {
-					value: "10 downing stree"
-				}
-			});
+			cb.call({ input: { value: "10 downing stree" } });
 
 			setTimeout(() => {
 				expectResponse(responses.autocomplete.results);
