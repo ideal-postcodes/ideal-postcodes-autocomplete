@@ -40,8 +40,9 @@ div.idpc_autocomplete > ul > li:hover {
 }
 
 div.idpc_autocomplete > ul > li.idpc_error {
-	font-size: 90%;
-	background-color: #CCC;
+	font-style: italic;
+	background-color: #EEE;
+	cursor: default !important;
 }
 
 div.idpc_autocomplete > ul > li[aria-selected="true"] {
