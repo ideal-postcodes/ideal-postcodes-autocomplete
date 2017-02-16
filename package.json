@@ -1,6 +1,6 @@
 {
   "name": "ideal-postcodes-autocomplete",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Frontend UK Address Autocomplete Library for Ideal Postcodes API",
   "main": "dist/ideal-postcodes-autocomplete.min.js",
   "scripts": {
@@ -29,7 +29,7 @@
     "url": "https://github.com/ideal-postcodes/ideal-postcodes-autocomplete/issues"
   },
   "dependencies": {
-    "ideal-postcodes-core": "0.3.3"
+    "ideal-postcodes-core": "0.3.4"
   },
   "devDependencies": {
     "babel-preset-es2015": "~6.9.0",
