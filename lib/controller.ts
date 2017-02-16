@@ -110,9 +110,9 @@ namespace Autocomplete {
 				if (self.onInput) self.onInput(event);
 				self.interface.setMessage(); // Clear any messages
 				self.requestIdCounter += 1;
-				const options: AutocompleteOptions = { 
-					query: this.input.value, 
-					_id: self.requestIdCounter 
+				const options: AutocompleteOptions = {
+					query: this.input.value,
+					_id: self.requestIdCounter
 				};
 				Autocomplete.validSearchFilters.forEach(filter => {
 					if (self.searchFilters[filter]) {

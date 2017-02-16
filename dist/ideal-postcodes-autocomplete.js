@@ -1,6 +1,6 @@
 /**
  * ideal-postcodes-autocomplete - Frontend UK Address Autocomplete Library for Ideal Postcodes API
- * @version v0.1.1
+ * @version v0.2.0
  * @link https://ideal-postcodes.co.uk
  * @license MIT
  */
@@ -396,6 +396,8 @@ var IdealPostcodes;
 /// <reference path="../index.ts" />
 (function (IdealPostcodes) {
     var cacheArguments = [
+        "id",
+        "postcode",
         "query",
         "limit",
         "page",
@@ -429,64 +431,64 @@ var IdealPostcodes;
                 umprnStore: {}
             };
         };
-        Cache.prototype.cacheAddressQuery = function (qs, response) {
+        Cache.prototype.cacheAddressQuery = function (options, response) {
             if (!this.active)
                 return;
-            var id = generateCacheId(qs);
+            var id = generateCacheId(options);
             this.store.addressStore[id] = response;
         };
-        Cache.prototype.getAddressQuery = function (qs) {
+        Cache.prototype.getAddressQuery = function (options) {
             if (!this.active)
                 return;
-            var id = generateCacheId(qs);
+            var id = generateCacheId(options);
             return this.store.addressStore[id];
         };
-        Cache.prototype.cachePostcodeQuery = function (qs, response) {
+        Cache.prototype.cachePostcodeQuery = function (options, response) {
             if (!this.active)
                 return;
-            var id = generateCacheId(qs);
+            var id = generateCacheId(options);
             this.store.postcodeStore[id] = response;
         };
-        Cache.prototype.getPostcodeQuery = function (qs) {
+        Cache.prototype.getPostcodeQuery = function (options) {
             if (!this.active)
                 return;
-            var id = generateCacheId(qs);
+            var id = generateCacheId(options);
             return this.store.postcodeStore[id];
         };
-        Cache.prototype.cacheAutocompleteQuery = function (qs, response) {
+        Cache.prototype.cacheAutocompleteQuery = function (options, response) {
             if (!this.active)
                 return;
-            var id = generateCacheId(qs);
+            var id = generateCacheId(options);
             this.store.autocompleteStore[id] = response;
         };
-        Cache.prototype.getAutocompleteQuery = function (qs) {
+        Cache.prototype.getAutocompleteQuery = function (options) {
             if (!this.active)
                 return;
-            var id = generateCacheId(qs);
+            var id = generateCacheId(options);
             return this.store.autocompleteStore[id];
         };
-        Cache.prototype.cacheUdprnQuery = function (qs, response) {
+        Cache.prototype.cacheUdprnQuery = function (options, response) {
             if (!this.active)
                 return;
-            var id = generateCacheId(qs);
+            var id = generateCacheId(options);
             this.store.udprnStore[id] = response;
         };
-        Cache.prototype.getUdprnQuery = function (qs) {
+        Cache.prototype.getUdprnQuery = function (options) {
             if (!this.active)
                 return;
-            var id = generateCacheId(qs);
+            var id = generateCacheId(options);
             return this.store.udprnStore[id];
         };
-        Cache.prototype.cacheUmprnQuery = function (qs, response) {
+        Cache.prototype.cacheUmprnQuery = function (options, response) {
             if (!this.active)
                 return;
-            var id = generateCacheId(qs);
+            var id = generateCacheId(options);
             this.store.umprnStore[id] = response;
         };
-        Cache.prototype.getUmprnQuery = function (qs) {
+        Cache.prototype.getUmprnQuery = function (options) {
             if (!this.active)
                 return;
-            var id = generateCacheId(qs);
+            var id = generateCacheId(options);
             return this.store.umprnStore[id];
         };
         return Cache;
@@ -906,6 +908,7 @@ var IdealPostcodes;
             this.cache = new IdealPostcodes.Cache();
             var self = this;
             this.autocompleteCallback = function () { };
+            // Need to consider caching as well! Can't store meta in cache store
             this.debouncedAutocomplete = IdealPostcodes.Utils.debounce(function (options) {
                 _this.lookupAutocomplete(options, self.autocompleteCallback);
             });
@@ -923,8 +926,7 @@ var IdealPostcodes;
             options.api_key = this.api_key;
             var headers = constructHeaders(options);
             var queryString = constructQuery(options);
-            var query = options.postcode;
-            var cachedResponse = this.cache.getPostcodeQuery(queryString);
+            var cachedResponse = this.cache.getPostcodeQuery(options);
             if (cachedResponse)
                 return callback(null, cachedResponse);
             IdealPostcodes.Transport.request({
@@ -936,7 +938,7 @@ var IdealPostcodes;
                     return callback(null, [], xhr);
                 if (error)
                     return callback(error, null, xhr);
-                _this.cache.cachePostcodeQuery(queryString, data.result);
+                _this.cache.cachePostcodeQuery(options, data.result);
                 return callback(null, data.result, xhr);
             });
         };
@@ -946,8 +948,7 @@ var IdealPostcodes;
             var headers = constructHeaders(options);
             var queryString = constructQuery(options);
             extend(queryString, constructAddressQuery(options));
-            var query = options.query;
-            var cachedResponse = this.cache.getAddressQuery(queryString);
+            var cachedResponse = this.cache.getAddressQuery(options);
             if (cachedResponse)
                 return callback(null, cachedResponse);
             IdealPostcodes.Transport.request({
@@ -957,7 +958,7 @@ var IdealPostcodes;
             }, function (error, data, xhr) {
                 if (error)
                     return callback(error, null, xhr);
-                _this.cache.cacheAddressQuery(queryString, data.result);
+                _this.cache.cacheAddressQuery(options, data.result);
                 return callback(null, data.result, xhr);
             });
         };
@@ -967,10 +968,9 @@ var IdealPostcodes;
             var headers = constructHeaders(options);
             var queryString = constructQuery(options);
             extend(queryString, constructAutocompleteQuery(options));
-            var query = options.query;
-            var cachedResponse = this.cache.getAutocompleteQuery(queryString);
+            var cachedResponse = this.cache.getAutocompleteQuery(options);
             if (cachedResponse)
-                return callback(null, cachedResponse);
+                return callback(null, cachedResponse, null, options);
             if (!this.strictAuthorisation) {
                 queryString["api_key"] = this.api_key;
                 delete headers["Authorization"];
@@ -981,9 +981,9 @@ var IdealPostcodes;
                 queryString: queryString
             }, function (error, data, xhr) {
                 if (error)
-                    return callback(error, null, xhr);
-                _this.cache.cacheAutocompleteQuery(queryString, data.result);
-                return callback(null, data.result, xhr);
+                    return callback(error, null, xhr, options);
+                _this.cache.cacheAutocompleteQuery(options, data.result);
+                return callback(null, data.result, xhr, options);
             });
         };
         Client.prototype.lookupUdprn = function (options, callback) {
@@ -991,18 +991,17 @@ var IdealPostcodes;
             options.api_key = this.api_key;
             var headers = constructHeaders(options);
             var queryString = constructQuery(options);
-            var id = options.id;
-            var cachedResponse = this.cache.getUdprnQuery(queryString);
+            var cachedResponse = this.cache.getUdprnQuery(options);
             if (cachedResponse)
                 return callback(null, cachedResponse);
             IdealPostcodes.Transport.request({
-                url: this.apiUrl() + "/udprn/" + id,
+                url: this.apiUrl() + "/udprn/" + options.id,
                 headers: headers,
                 queryString: queryString
             }, function (error, data, xhr) {
                 if (error)
                     return callback(error, null, xhr);
-                _this.cache.cacheUdprnQuery(queryString, data.result);
+                _this.cache.cacheUdprnQuery(options, data.result);
                 return callback(null, data.result, xhr);
             });
         };
@@ -1011,18 +1010,17 @@ var IdealPostcodes;
             options.api_key = this.api_key;
             var headers = constructHeaders(options);
             var queryString = constructQuery(options);
-            var id = options.id;
-            var cachedResponse = this.cache.getUmprnQuery(queryString);
+            var cachedResponse = this.cache.getUmprnQuery(options);
             if (cachedResponse)
                 return callback(null, cachedResponse);
             IdealPostcodes.Transport.request({
-                url: this.apiUrl() + "/umprn/" + id,
+                url: this.apiUrl() + "/umprn/" + options.id,
                 headers: headers,
                 queryString: queryString
             }, function (error, data, xhr) {
                 if (error)
                     return callback(error, null, xhr);
-                _this.cache.cacheUmprnQuery(queryString, data.result);
+                _this.cache.cacheUmprnQuery(options, data.result);
                 return callback(null, data.result, xhr);
             });
         };
@@ -1051,6 +1049,16 @@ var IdealPostcodes;
 /// <reference path="./utils.ts" />
 /// <reference path="../node_modules/ideal-postcodes-core/lib/index.ts" />
 /// <reference path="../node_modules/ideal-postcodes-core/lib/client/client.ts" />
+var Autocomplete;
+/// <reference path="./interface.ts" />
+/// <reference path="./controller.ts" />
+/// <reference path="./utils.ts" />
+/// <reference path="../node_modules/ideal-postcodes-core/lib/index.ts" />
+/// <reference path="../node_modules/ideal-postcodes-core/lib/client/client.ts" />
+(function (Autocomplete) {
+    Autocomplete.validClientOptions = ["licensee", "filter", "tags"];
+    Autocomplete.validSearchFilters = ["postcode_outward", "post_town"];
+})(Autocomplete || (Autocomplete = {}));
 if (window["IdealPostcodes"] !== undefined) {
     window["IdealPostcodes"]["Autocomplete"] = Autocomplete;
 }
@@ -1076,6 +1084,8 @@ var Autocomplete;
 (function (Autocomplete) {
     var Controller = (function () {
         function Controller(options) {
+            this.requestIdCounter = 0;
+            this.lastRequestId = 0;
             this.inputField = options.inputField;
             this.checkKey = options.checkKey;
             this.removeOrganisation = options.removeOrganisation;
@@ -1089,8 +1099,8 @@ var Autocomplete;
         Controller.prototype.configureApiRequests = function (options) {
             var _this = this;
             this.options = {};
-            var basicOptions = ["licensee", "filter", "tags"];
-            basicOptions.forEach(function (basicOption) {
+            this.searchFilters = {};
+            Autocomplete.validClientOptions.forEach(function (basicOption) {
                 if (options[basicOption] !== undefined) {
                     _this.options[basicOption] = options[basicOption];
                 }
@@ -1098,6 +1108,9 @@ var Autocomplete;
         };
         Controller.prototype.initialiseClient = function (options) {
             this.client = new IdealPostcodes.Client(options);
+        };
+        Controller.prototype.setSearchFilter = function (options) {
+            this.searchFilters = options;
         };
         Controller.prototype.initialiseOutputFields = function (outputFields) {
             var result = {};
@@ -1146,7 +1159,17 @@ var Autocomplete;
                 if (self.onInput)
                     self.onInput(event);
                 self.interface.setMessage(); // Clear any messages
-                self.client.autocompleteAddress({ query: this.input.value });
+                self.requestIdCounter += 1;
+                var options = {
+                    query: this.input.value,
+                    _id: self.requestIdCounter
+                };
+                Autocomplete.validSearchFilters.forEach(function (filter) {
+                    if (self.searchFilters[filter]) {
+                        options[filter] = self.searchFilters[filter];
+                    }
+                });
+                self.client.autocompleteAddress(options);
             };
         };
         // Populates fields with correct address when suggestion selected
@@ -1196,14 +1219,20 @@ var Autocomplete;
                     interfaceConfig[callbackName] = options[callbackName];
             });
             self.interface = new Autocomplete.Interface(interfaceConfig);
-            self.client.registerAutocompleteCallback(function (error, response) {
+            self.client.registerAutocompleteCallback(function (error, response, xhr, options) {
                 if (error) {
                     self.interface.setMessage("Unable to retrieve address suggestions. Please enter your address manually");
                     return self.onSearchError(error);
                 }
                 var suggestions = response.hits;
-                _this.onSuggestionsRetrieved.call(_this, suggestions);
-                self.interface.setSuggestions(suggestions);
+                _this.onSuggestionsRetrieved.call(_this, suggestions, options);
+                if (!options || options._id === undefined) {
+                    return self.interface.setSuggestions(suggestions);
+                }
+                if (options._id > self.lastRequestId) {
+                    self.lastRequestId = options["_id"];
+                    self.interface.setSuggestions(suggestions);
+                }
             });
             this.onLoaded.call(this);
         };
