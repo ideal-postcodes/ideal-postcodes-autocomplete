@@ -2,6 +2,9 @@
 
 ## [0.2.0] - 2017-02-09
 - Set query filters for post town and outward codes with `controller.setSearchFilter`
+- Enforce strict ordering autocomplete suggestions
+- Use default pointer and more consistent styling for error messages
+- Add `titleizePostTown` config parameter which converts post towns into title case (from upper case)
 
 ## [0.1.1] - 2016-10-05
 - Prevent interface attaching if it already exists

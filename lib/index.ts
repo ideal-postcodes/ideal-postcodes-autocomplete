@@ -91,6 +91,7 @@ namespace Autocomplete {
 		outputFields: AddressFields;
 		removeOrganisation?: boolean;
 		checkKey?: boolean;
+		titleizePostTown?: boolean;
 	}
 }
 

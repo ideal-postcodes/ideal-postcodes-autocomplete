@@ -375,6 +375,14 @@ describe("Controller", () => {
 		it ("allows multiple output fields per attribute", () => {
 			expect($("#postcode2").val()).toEqual("ID1 1QD");
 		});
+
+		it ("can be configured to titleize post town", () => {
+			config.titleizePostTown = true;
+			controller = new IdealPostcodes.Autocomplete.Controller(config);
+			address = JSON.parse(responses.udprn.results.responseText).result;
+			controller.populateAddress(address);
+			expect($("#post_town").val()).toEqual("London");
+		});
 	});
 
 	describe("Initialise interface", () => {

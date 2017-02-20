@@ -28,15 +28,20 @@ namespace Autocomplete {
 		public onFocus: () => void;
 		public onInput: (event: Event) => void;
 		public removeOrganisation: boolean;
+		public titleizePostTown: boolean;
 		public checkKey: boolean;
 		public searchFilters: IdealPostcodes.SearchFilters;
 		public requestIdCounter: number = 0;
 		public lastRequestId: number = 0;
 
 		constructor(options: ControllerOptions) {
-			this.inputField = options.inputField;
-			this.checkKey = options.checkKey;
-			this.removeOrganisation = options.removeOrganisation;
+			const configAttributes = [
+				"inputField",
+				"checkKey",
+				"removeOrganisation",
+				"titleizePostTown"
+			];
+			configAttributes.forEach(attr => this[attr] = options[attr]);
 			this.configureApiRequests(options);
 			this.initialiseClient(options);
 			this.initialiseOutputFields(options.outputFields);
@@ -197,8 +202,16 @@ namespace Autocomplete {
 		}
 
 		populateAddress(address: AddressFields): void {
-			// TODO: Downcase post town
 			const outputFields = this.outputFields;
+
+			const extractAddressAttr = (address: AddressFields, attr: string): string => {
+				const result = address[attr];
+				if (this.titleizePostTown && attr === "post_town") {
+					return Autocomplete.Utils.titleizePostTown(result);
+				}
+				return result;
+			};
+
 			for (let attr in outputFields) {
 				if (outputFields.hasOwnProperty(attr)) {
 					outputFields[attr].forEach(selector => {
@@ -206,7 +219,7 @@ namespace Autocomplete {
 						for (let i = 0; i < inputs.length; i++) {
 							const input = <HTMLInputElement>inputs[i];
 							if (typeof input.value === "string") {
-								input.value = address[attr];
+								input.value = extractAddressAttr(address, attr);
 							}
 						}
 					});
