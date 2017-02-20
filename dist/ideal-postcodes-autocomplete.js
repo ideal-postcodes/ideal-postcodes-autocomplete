@@ -20,6 +20,47 @@ var Autocomplete;
 (function (Autocomplete) {
     var Utils;
     (function (Utils) {
+        var joiner = /-/;
+        var boness = /bo'ness/i;
+        var containsAmpersand = /\w+&\w+/;
+        var exclusion = /^(of|le|upon|on|the)$/;
+        var joinerWord = /^(in|de|under|upon|y|on|over|the|by)$/;
+        // capitalize word with exceptions on exclusion list
+        var capitalizeWords = function (word) {
+            word = word.toLowerCase();
+            if (word.match(exclusion))
+                return word;
+            if (word.match(containsAmpersand))
+                return word.toUpperCase();
+            return word.charAt(0).toUpperCase() + word.slice(1);
+        };
+        // Check for names connected with hyphens
+        var checkJoins = function (word) {
+            if (word.match(joiner) === null)
+                return word;
+            return word
+                .split("-")
+                .map(function (word) {
+                if (word.match(joinerWord))
+                    return word.toLowerCase();
+                return capitalizeWords(word);
+            })
+                .join("-");
+        };
+        // Single instance cases
+        var checkExceptions = function (word) {
+            if (word.match(boness))
+                return "Bo'Ness";
+            return word;
+        };
+        Utils.titleizePostTown = function (postTown) {
+            return postTown
+                .split(" ")
+                .map(capitalizeWords)
+                .map(checkJoins)
+                .map(checkExceptions)
+                .join(" ");
+        };
         Utils.create = function (elemType, options) {
             var elem = document.createElement(elemType);
             for (var attr in options) {
@@ -1084,11 +1125,16 @@ var Autocomplete;
 (function (Autocomplete) {
     var Controller = (function () {
         function Controller(options) {
+            var _this = this;
             this.requestIdCounter = 0;
             this.lastRequestId = 0;
-            this.inputField = options.inputField;
-            this.checkKey = options.checkKey;
-            this.removeOrganisation = options.removeOrganisation;
+            var configAttributes = [
+                "inputField",
+                "checkKey",
+                "removeOrganisation",
+                "titleizePostTown"
+            ];
+            configAttributes.forEach(function (attr) { return _this[attr] = options[attr]; });
             this.configureApiRequests(options);
             this.initialiseClient(options);
             this.initialiseOutputFields(options.outputFields);
@@ -1243,8 +1289,15 @@ var Autocomplete;
             this.interface = null;
         };
         Controller.prototype.populateAddress = function (address) {
-            // TODO: Downcase post town
+            var _this = this;
             var outputFields = this.outputFields;
+            var extractAddressAttr = function (address, attr) {
+                var result = address[attr];
+                if (_this.titleizePostTown && attr === "post_town") {
+                    return Autocomplete.Utils.titleizePostTown(result);
+                }
+                return result;
+            };
             var _loop_1 = function (attr) {
                 if (outputFields.hasOwnProperty(attr)) {
                     outputFields[attr].forEach(function (selector) {
@@ -1252,7 +1305,7 @@ var Autocomplete;
                         for (var i = 0; i < inputs.length; i++) {
                             var input = inputs[i];
                             if (typeof input.value === "string") {
-                                input.value = address[attr];
+                                input.value = extractAddressAttr(address, attr);
                             }
                         }
                     });
