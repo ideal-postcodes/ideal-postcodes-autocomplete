@@ -1,4 +1,20 @@
 describe("Utils", () => {
+	describe("titleizePostTown", () => {
+		const testCases = [
+			"Appleby-in-Westmorland",
+			"Aboyne",
+			"Bo'Ness",
+			"Walton on the Naze"
+		];
+		it ("correctly titleizes post town names", () => {
+			testCases.forEach(post_town => {
+				const upperCased = post_town.toUpperCase();
+				expect(IdealPostcodes.Autocomplete.Utils.titleizePostTown(upperCased))
+					.toEqual(post_town);
+			});
+		});
+	});
+
 	describe("addClass", () => {
 		const addClass = IdealPostcodes.Autocomplete.Utils.addClass;
 		let node;

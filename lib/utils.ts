@@ -4,6 +4,47 @@
 
 namespace Autocomplete {
 	export namespace Utils {
+		const joiner: RegExp = /-/;
+		const boness: RegExp = /bo'ness/i;
+		const containsAmpersand: RegExp = /\w+&\w+/;
+		const exclusion: RegExp = /^(of|le|upon|on|the)$/;
+		const joinerWord: RegExp = /^(in|de|under|upon|y|on|over|the|by)$/;
+
+		// capitalize word with exceptions on exclusion list
+		const capitalizeWords = (word: string): string => {
+			word = word.toLowerCase();
+			if (word.match(exclusion)) return word;
+			if (word.match(containsAmpersand)) return word.toUpperCase();
+			return word.charAt(0).toUpperCase() + word.slice(1);
+		};
+
+		// Check for names connected with hyphens
+		const checkJoins = (word: string): string => {
+			if (word.match(joiner) === null) return word;
+			return word
+				.split("-")
+				.map(word => {
+					if (word.match(joinerWord)) return word.toLowerCase();
+					return capitalizeWords(word);
+				})
+				.join("-");
+		};
+
+		// Single instance cases
+		const checkExceptions = (word: string): string => {
+			if (word.match(boness)) return "Bo'Ness";
+			return word;
+		};
+
+		export const titleizePostTown = (postTown: string): string => {
+			return postTown
+				.split(" ")
+				.map(capitalizeWords)
+				.map(checkJoins)
+				.map(checkExceptions)
+				.join(" ");
+		};
+
 		export const create = (elemType: string, options: any): HTMLElement => {
 			const elem = document.createElement(elemType);
 			for (let attr in options) {
