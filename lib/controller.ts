@@ -97,6 +97,7 @@ namespace Autocomplete {
 		initialiseInterface(options: ControllerOptions): void {
 			if (this.checkKey) {
 				this.client.checkKeyUsability(this.options, (error, response) => {
+					if (error) return this.onFailedCheck.call(this);
 					if (response.available) {
 						this.attachInterface(options);
 					} else {
