@@ -125,10 +125,8 @@ gulp.task("compile_tests", () => {
 
 gulp.task("lint:default", () => {
 	return gulp.src(paths.tscripts.src)
-		.pipe(tslint())
-		.pipe(tslint.report("prose", {
-			emitError: true
-		}));
+		.pipe( tslint({ formatting: "prose" }) )
+		.pipe( tslint.report({ emitError: true }) );
 });
 
 gulp.task("browserstack:integration", done => {
