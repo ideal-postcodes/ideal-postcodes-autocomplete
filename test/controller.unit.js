@@ -93,7 +93,7 @@ describe("Controller", () => {
 			it ("is invoked when check fails", done => {
 				controller = new IdealPostcodes.Autocomplete.Controller({
 					checkKey: true,
-					api_key: test_api_key,
+					api_key: "foo",
 					inputField: "#input",
 					onFailedCheck: done,
 					onLoaded: () => {
@@ -188,7 +188,7 @@ describe("Controller", () => {
 
 			it ("is invoked on suggestion error", done => {
 				controller = new IdealPostcodes.Autocomplete.Controller({
-					api_key: test_api_key,
+					api_key: "foo",
 					inputField: "#input",
 					onSearchError: done
 				});
@@ -435,7 +435,7 @@ describe("Controller", () => {
 			it ("does not attach controller and calls fail check when key not ready", done => {
 				config = {
 					checkKey: true,
-					api_key: test_api_key,
+					api_key: "foo",
 					inputField: "#input",
 					onFailedCheck: () => {
 						expect(controller.interface).toBeUndefined();
