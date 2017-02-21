@@ -5,7 +5,7 @@
  * CONTROLLER
  *
  * Connects the user interface widget (Interface) with the Ideal Postcodes
- * client to allow users to search for their address via an autocomplete box. 
+ * client to allow users to search for their address via an autocomplete box.
  * The state and internal logic of the autocomplete widget goes here.
  */
 
