@@ -6,6 +6,7 @@ if (!window.responses) window.responses = {};
 	var invalidKey = '{"code":4010,"message":"Invalid Key. For more information see http://ideal-postcodes.co.uk/documentation/response-codes#4010"}';
 	var error = '{"code":5000,"message":"Uncatalogued error"}';
 	var outwardFilteredResult = '{"result":{"hits":[{"suggestion":"Prime Minister & First Lord Of The Treasury, 10 Downing Street, London, SW1A","urls":{"udprn":"/v1/udprn/23747771"},"udprn":23747771}]},"code":2000,"message":"Success"}';
+	var testResults = '{"result":{"hits":[{"suggestion":"2 Barons Court Road, London, ID1","udprn":0,"urls":{"udprn":"/v1/udprn/0"}},{"suggestion":"4 Barons Court Road, London, ID1","udprn":-10,"urls":{"udprn":"/v1/udprn/-10"}},{"suggestion":"6 Barons Court Road, London, ID1","udprn":-11,"urls":{"udprn":"/v1/udprn/-11"}}]},"code":2000,"message":"Success"}';
 
 	responses.autocomplete = {
 		results: {
@@ -27,6 +28,11 @@ if (!window.responses) window.responses = {};
 			status: 500,
 			contentType: "application/json",
 			responseText: error
+		},
+		testResults: {
+			status: 200,
+			contentType: "application/json",
+			responseText: testResults
 		}
 	}
 }(window.responses));
