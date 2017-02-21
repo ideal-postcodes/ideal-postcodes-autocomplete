@@ -27,6 +27,8 @@ describe("Controller", () => {
 
 		describe("Failed suggestion", () => {
 			it ("leaves message in dropdown", done => {
+				config.api_key = "foo";
+				controller = new IdealPostcodes.Autocomplete.Controller(config);
 				const cInterface = controller.interface;
 				cInterface._onInput("10 Downing");
 				setTimeout(() => {
@@ -42,7 +44,13 @@ describe("Controller", () => {
 		describe("Failed address lookup", () => {
 			it ("leaves message in dropdown", done => {
 				const cInterface = controller.interface;
-				const suggestions = JSON.parse(responses.autocomplete.results.responseText).result.hits;
+				const suggestions = JSON.parse(responses.autocomplete.results.responseText)
+					.result
+					.hits
+					.map(suggestion => {
+						suggestion.udprn = -1;
+						return suggestion;
+					});
 				cInterface.setSuggestions(suggestions).select(cInterface.suggestionList.children[0]);
 				setTimeout(() => {
 					expectResponse(responses.udprn.error);
