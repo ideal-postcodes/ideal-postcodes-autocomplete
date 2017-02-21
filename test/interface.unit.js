@@ -243,30 +243,36 @@ describe("Interface", () => {
 
 		beforeEach(() => {
 			installAjax();
-			suggestions = JSON.parse(responses.autocomplete.results.responseText).result.hits;
+			suggestions = JSON.parse(responses.autocomplete.testResults.responseText).result.hits;
 			cInterface.setSuggestions(suggestions);
 		});
 
 		afterEach(uninstallAjax);
 
-		it ("pipes address to field on selection", () => {
+		it ("pipes address to field on selection", done => {
 			cInterface.select(cInterface.suggestionList.children[0]);
 			expectResponse(responses.udprn.results);
-			expect($(config.outputFields.line_1).val()).toEqual("2 Barons Court Road");
-			expect($(config.outputFields.line_2).val()).toEqual("");
-			expect($(config.outputFields.line_3).val()).toEqual("");
-			expect($(config.outputFields.post_town).val()).toEqual("LONDON");
-			expect($(config.outputFields.postcode.split(",")[0]).val()).toEqual("ID1 1QD");
+			setTimeout(() => {
+				expect($(config.outputFields.line_1).val()).toEqual("2 Barons Court Road");
+				expect($(config.outputFields.line_2).val()).toEqual("");
+				expect($(config.outputFields.line_3).val()).toEqual("");
+				expect($(config.outputFields.post_town).val()).toEqual("LONDON");
+				expect($(config.outputFields.postcode.split(",")[0]).val()).toEqual("ID1 1QD");
+				done();
+			}, 250);
 		});
 
-		it ("allows selection with mouse click", () => {
+		it ("allows selection with mouse click", done => {
 			cInterface.select($(cInterface.suggestionList.children[0]).click());
 			expectResponse(responses.udprn.results);
-			expect($(config.outputFields.line_1).val()).toEqual("2 Barons Court Road");
-			expect($(config.outputFields.line_2).val()).toEqual("");
-			expect($(config.outputFields.line_3).val()).toEqual("");
-			expect($(config.outputFields.post_town).val()).toEqual("LONDON");
-			expect($(config.outputFields.postcode.split(",")[0]).val()).toEqual("ID1 1QD");
+			setTimeout(() => {
+				expect($(config.outputFields.line_1).val()).toEqual("2 Barons Court Road");
+				expect($(config.outputFields.line_2).val()).toEqual("");
+				expect($(config.outputFields.line_3).val()).toEqual("");
+				expect($(config.outputFields.post_town).val()).toEqual("LONDON");
+				expect($(config.outputFields.postcode.split(",")[0]).val()).toEqual("ID1 1QD");
+				done();
+			}, 250);
 		});
 	});
 
