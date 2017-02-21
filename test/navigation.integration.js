@@ -61,19 +61,21 @@ module.exports = {
 			browser.expect.element("ul.idpc_ul").to.not.be.visible;
 		});
 	},
-	"Clicking other areas": browser => {
-		browser.click("#line_1", function () {
+	"Re Focus": browser => {
+		browser
+			.click("#input")
+			.keys(["1"], function () {
+	      browser.expect.element("ul.idpc_ul").to.be.visible.before(DEFAULT_TIMEOUT);
+      });
+	},
+	"Blur": browser => {
+		browser.click("#title", function () {
 			browser.expect.element("ul.idpc_ul").to.not.be.visible.after(DEFAULT_TIMEOUT);
 		});
 	},
 	"Focus": browser => {
 		browser.click("#input", function () {
 			browser.expect.element("ul.idpc_ul").to.be.visible.after(DEFAULT_TIMEOUT);
-		});
-	},
-	"Blur": browser => {
-		browser.click("#line_1", function () {
-			browser.expect.element("ul.idpc_ul").to.not.be.visible;
 		});
 	},
 	"End": browser => {
