@@ -247,7 +247,7 @@ gulp.task("ci", done => {
 	);
 });
 
-gulp.task('test_webserver', function() {
+gulp.task('test_webserver', () => {
   gulp.src('./')
     .pipe(server({
       livereload: false,
@@ -255,7 +255,7 @@ gulp.task('test_webserver', function() {
     }));
 });
 
-gulp.task('webserver', function() {
+gulp.task('webserver', () => {
   gulp.src('./')
     .pipe(server({
       livereload: true,
