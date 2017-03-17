@@ -20,7 +20,7 @@ const commonCapabilities = {
 };
 
 const nightwatchConfig = {
-	src_folders: [files.pop()],
+	src_folders: files,
 	"output_folder": `${testRoot}/selenium/output/`,
   "custom_commands_path": "",
   "custom_assertions_path": "",
@@ -34,9 +34,7 @@ const nightwatchConfig = {
 	},
 
 	test_settings: {
-		default: {
-			desiredCapabilities: extend({}, commonCapabilities)
-		}
+		default: {}
 	}
 };
 
