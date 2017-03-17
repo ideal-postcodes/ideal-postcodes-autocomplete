@@ -56,9 +56,9 @@ module.exports = {
 				.which.equals("true");
 		});
 	},
-	"Escape button": browser => {
-		browser.keys(browser.Keys.ESCAPE, function () {
-			browser.expect.element("ul.idpc_ul").to.not.be.visible;
+	"Blur": browser => {
+		browser.doubleClick("#title", function () {
+			browser.expect.element("ul.idpc_ul").to.not.be.visible.after(DEFAULT_TIMEOUT);
 		});
 	},
 	"Re Focus": browser => {
@@ -68,14 +68,16 @@ module.exports = {
 	      browser.expect.element("ul.idpc_ul").to.be.visible.before(DEFAULT_TIMEOUT);
       });
 	},
-	"Blur": browser => {
-		browser.click("#title", function () {
-			browser.expect.element("ul.idpc_ul").to.not.be.visible.after(DEFAULT_TIMEOUT);
+	"Escape button": browser => {
+		browser.keys(browser.Keys.ESCAPE, function () {
+			browser.expect.element("ul.idpc_ul").to.not.be.visible;
 		});
 	},
 	"Focus": browser => {
-		browser.click("#input", function () {
-			browser.expect.element("ul.idpc_ul").to.be.visible.after(DEFAULT_TIMEOUT);
+		browser.doubleClick("#title", function () {
+			browser.click("#input", function () {
+				browser.expect.element("ul.idpc_ul").to.be.visible.after(DEFAULT_TIMEOUT);
+			});
 		});
 	},
 	"End": browser => {
