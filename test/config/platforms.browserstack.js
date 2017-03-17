@@ -5,12 +5,12 @@ module.exports = {
 
 	// OS10.Firefox
 
-	"OSX_FireFox": { // X
+	"OSX_FireFox": { 
 		base: "BrowserStack",
 		browser: "firefox",
 		os: "OS X",
-		os_version: "El Capitan",
-		browser_version: "48.0"
+		os_version: "Sierra",
+		browser_version: "47.0"
 	},
 
 	// OS10.Chrome
@@ -20,7 +20,7 @@ module.exports = {
 		browser: "Chrome",
 		browser_version: "52.0",
 		os: "OS X",
-		os_version: "El Capitan"
+		os_version: "Sierra"
 	},
 
 	// OS10.Safari
@@ -85,13 +85,13 @@ module.exports = {
 
 	// Windows.IE
 
-	"InternetExplorer_9": {
-		base: "BrowserStack",
-		browser: "IE",
-		browser_version: "9.0",
-		os: "Windows",
-		os_version: "7"
-	},
+	// "InternetExplorer_9": {
+	// 	base: "BrowserStack",
+	// 	browser: "IE",
+	// 	browser_version: "9.0",
+	// 	os: "Windows",
+	// 	os_version: "7"
+	// },
 	"InternetExplorer_10": {
 		base: "BrowserStack",
 		browser: "IE",
@@ -120,53 +120,50 @@ module.exports = {
 	// Android
 
 	nexus_5: {
-	 browserName : "android",
-	 platform : "ANDROID",
-	 device : "Google Nexus 5"
+		base: "BrowserStack",
+		browserName: "android",
+		platform: "ANDROID",
+		os: "android",
+		os_version: "5.0",
+		device: "Google Nexus 5"
 	},
 
 	nexus_4: {
-	 browserName : "android",
-	 platform : "ANDROID",
-	 device : "Google Nexus 4"
+		base: "BrowserStack",
+		browserName: "android",
+		platform: "ANDROID",
+		os: "android",
+		os_version: "4.2",
+		device: "Google Nexus 4"
 	},
 
 	nexus: {
-	 browserName : "android",
-	 platform : "ANDROID",
-	 device : "Google Nexus"
+		base: "BrowserStack",
+		browserName: "android",
+		platform: "ANDROID",
+		os: "android",
+		os_version: "4.0",
+		device: "Google Nexus"
 	},
 
 	// iOS
 
-	iphone_4s: {
-	 browserName : "iPhone",
-	 platform : "MAC",
-	 device : "iPhone 4S"
-	},
-
-	iphone_5: {
-	 browserName : "iPhone",
-	 platform : "MAC",
-	 device : "iPhone 5"
-	},
-
 	iphone_5s: {
-	 browserName : "iPhone",
-	 platform : "MAC",
-	 device : "iPhone 5S"
-	},
-
-	iphone_6: {
-	 browserName : "iPhone",
-	 platform : "MAC",
-	 device : "iPhone 6"
+		base: "BrowserStack",
+		browserName: "iPhone",
+		platform: "MAC",
+		os: "ios",
+		os_version: "7.0",
+		device: "iPhone 5S"
 	},
 
 	iphone_6s: {
-	 browserName : "iPhone",
-	 platform : "MAC",
-	 device : "iPhone 6S"
+		base: "BrowserStack",
+		browserName: "iPhone",
+		platform: "MAC",
+		os: "ios",
+		os_version: "9.1",
+		device: "iPhone 6S"
 	}
 	
 };
