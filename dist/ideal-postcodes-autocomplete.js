@@ -1186,6 +1186,8 @@ var Autocomplete;
             var _this = this;
             if (this.checkKey) {
                 this.client.checkKeyUsability(this.options, function (error, response) {
+                    if (error)
+                        return _this.onFailedCheck.call(_this);
                     if (response.available) {
                         _this.attachInterface(options);
                     }
