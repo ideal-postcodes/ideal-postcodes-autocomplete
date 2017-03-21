@@ -247,6 +247,24 @@ gulp.task("ci", done => {
 	);
 });
 
+gulp.task("ci:integration", done => {
+	runSequence(
+		"lint",
+		"compile_test_build",
+		"browserstack:integration",
+		done
+	);
+});
+
+gulp.task("ci:unit", done => {
+	runSequence(
+		"lint",
+		"compile_test_build",
+		"browserstack:unit",
+		done
+	);
+});
+
 gulp.task('test_webserver', () => {
   gulp.src('./')
     .pipe(server({
