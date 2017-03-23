@@ -57,9 +57,17 @@ module.exports = {
 		});
 	},
 	"Blur": browser => {
-		browser.doubleClick("#title", function () {
-			browser.expect.element("ul.idpc_ul").to.not.be.visible.after(DEFAULT_TIMEOUT);
+		browser.click("#title", function () {
+			browser.expect.element("ul.idpc_ul").to.not.be.visible.before(DEFAULT_TIMEOUT);
 		});
+	},
+	"Escape button": browser => {
+		browser
+			.click("#input")
+			.keys(browser.Keys.ESCAPE, function () {
+				browser.saveScreenshot(screenshotName(browser, "Dropdown should not be visible after escape is pressed"));
+				browser.expect.element("ul.idpc_ul").to.not.be.visible.before(DEFAULT_TIMEOUT);
+			});
 	},
 	"Re Focus": browser => {
 		browser
@@ -67,18 +75,6 @@ module.exports = {
 			.keys(["1"], function () {
 	      browser.expect.element("ul.idpc_ul").to.be.visible.before(DEFAULT_TIMEOUT);
       });
-	},
-	"Escape button": browser => {
-		browser.keys(browser.Keys.ESCAPE, function () {
-			browser.expect.element("ul.idpc_ul").to.not.be.visible;
-		});
-	},
-	"Focus": browser => {
-		browser.doubleClick("#title", function () {
-			browser.click("#input", function () {
-				browser.expect.element("ul.idpc_ul").to.be.visible.after(DEFAULT_TIMEOUT);
-			});
-		});
 	},
 	"End": browser => {
 		browser.end();
