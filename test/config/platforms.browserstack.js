@@ -78,6 +78,13 @@ const platforms = {
 		os: "Windows",
 		os_version: "10"
 	},
+	"windows.chrome.49": {
+		base: "BrowserStack",
+		browser: "chrome",
+		browser_version: "49.0",
+		os: "Windows",
+		os_version: "10"
+	},
 	"windows.edge.14": {
 		base: "BrowserStack",
 		browser: "Edge",
