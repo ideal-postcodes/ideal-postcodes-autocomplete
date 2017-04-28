@@ -120,6 +120,7 @@ namespace Autocomplete {
 					query: this.input.value,
 					_id: self.requestIdCounter
 				};
+				if (self.options.licensee) options.licensee = self.options.licensee;
 				Autocomplete.validSearchFilters.forEach(filter => {
 					if (self.searchFilters[filter]) {
 						options[filter] = self.searchFilters[filter];
@@ -148,7 +149,7 @@ namespace Autocomplete {
 					self.populateAddress(address);
 				};
 
-				const options: IdealPostcodes.LookupIdOptions = IdealPostcodes.Utils.extend({}, this.options);
+				const options: IdealPostcodes.LookupIdOptions = IdealPostcodes.Utils.extend({}, self.options);
 
 				if (suggestion.umprn) {
 					options["id"] = suggestion.umprn;
