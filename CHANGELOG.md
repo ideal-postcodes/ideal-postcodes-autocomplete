@@ -1,5 +1,8 @@
 # Changelog
 
+## [0.2.1] - 2017-04-28
+- Fix: Pass licensee information into autocomplete requests
+
 ## [0.2.0] - 2017-02-09
 - Set query filters for post town and outward codes with `controller.setSearchFilter`
 - Enforce strict ordering autocomplete suggestions

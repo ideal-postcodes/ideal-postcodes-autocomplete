@@ -1,6 +1,6 @@
 /**
  * ideal-postcodes-autocomplete - Frontend UK Address Autocomplete Library for Ideal Postcodes API
- * @version v0.2.0
+ * @version v0.2.1
  * @link https://ideal-postcodes.co.uk
  * @license MIT
  */
@@ -1233,6 +1233,8 @@ var Autocomplete;
                     query: this.input.value,
                     _id: self.requestIdCounter
                 };
+                if (self.options.licensee)
+                    options.licensee = self.options.licensee;
                 Autocomplete.validSearchFilters.forEach(function (filter) {
                     if (self.searchFilters[filter]) {
                         options[filter] = self.searchFilters[filter];
@@ -1259,7 +1261,7 @@ var Autocomplete;
                     }
                     self.populateAddress(address);
                 };
-                var options = IdealPostcodes.Utils.extend({}, this.options);
+                var options = IdealPostcodes.Utils.extend({}, self.options);
                 if (suggestion.umprn) {
                     options["id"] = suggestion.umprn;
                     self.client.lookupUmprn(options, callback);
