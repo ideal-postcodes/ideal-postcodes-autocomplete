@@ -5,8 +5,8 @@
 		"out": "ideal-postcodes-autocomplete.js",
 		"noEmitOnError": false
 	},
-	"files": [
-		"lib/*.ts"
+	"include": [
+		"lib/**/*"
 	],
 	"exclude": [
 		"test",

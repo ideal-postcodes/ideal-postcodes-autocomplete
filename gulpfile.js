@@ -33,7 +33,7 @@ const platforms = require("./test/config/platforms.browserstack.js");
 
 const paths = {
 	tscripts : { 
-		src : tsconfig.files,
+		src : tsconfig.include,
 		dest : "dist",
 		testDest: "test/dist"
 	}
