@@ -1,39 +1,54 @@
 /// <reference path="./index.ts" />
 /// <reference path="./interface.ts" />
 
-/*
- * CONTROLLER
- *
- * Connects the user interface widget (Interface) with the Ideal Postcodes
- * client to allow users to search for their address via an autocomplete box.
- * The state and internal logic of the autocomplete widget goes here.
- */
-
 namespace Autocomplete {
-	export class Controller {
-		public client: IdealPostcodes.Client;
-		public outputFields: AddressFields;
-		public inputField: string;
-		public options: IdealPostcodes.BasicOptions;
-		public interface: Autocomplete.Interface;
-		public onLoaded: () => void;
-		public onFailedCheck: () => void;
-		public onSuggestionsRetrieved: (suggestion: Suggestion[], options: IdealPostcodes.LookupAutocompleteOptions) => void;
-		public onAddressSelected: (suggestion: Suggestion) => void;
-		public onAddressRetrieved: (address: AddressFields) => void;
-		public onSearchError: (error: Error) => void;
-		public onOpen: () => void;
-		public onBlur: () => void;
-		public onClose: () => void;
-		public onFocus: () => void;
-		public onInput: (event: Event) => void;
-		public removeOrganisation: boolean;
-		public titleizePostTown: boolean;
-		public checkKey: boolean;
-		public searchFilters: IdealPostcodes.SearchFilters;
-		public requestIdCounter: number = 0;
-		public lastRequestId: number = 0;
 
+	/**
+	 * # Autocompete.Controller
+	 *
+	 * The Autocomplete Controller class acts as the public class which you may
+	 * wield to enable address autocomplete on your HTML address forms
+	 *
+	 * When instantiated, the controller will serve as a bridge beteen the
+	 * address suggestion interface presented on the DOM and the Ideal
+	 * Postcodes Address resolution HTTP APIs
+	 *
+	 * More concretely, the instantiation of a controller instance creates:
+	 * - A user interface instance `Autocomplete.Interface`
+	 * - An instance of the [Ideal Postcodes browser client](https://github.com/ideal-postcodes/ideal-postcodes-core)
+	 *
+	 * The role of the controller is to bind to events produced by the user
+	 * interface and take appropriate action including querying the API,
+	 * modifying other aspects of the DOM.
+	 */
+	export class Controller {
+		private client: IdealPostcodes.Client;
+		private outputFields: AddressFields;
+		private inputField: string;
+		private options: IdealPostcodes.BasicOptions;
+		private interface: Autocomplete.Interface;
+		private onLoaded: () => void;
+		private onFailedCheck: () => void;
+		private onSuggestionsRetrieved: (suggestion: Suggestion[], options: IdealPostcodes.LookupAutocompleteOptions) => void;
+		private onAddressSelected: (suggestion: Suggestion) => void;
+		private onAddressRetrieved: (address: AddressFields) => void;
+		private onSearchError: (error: Error) => void;
+		private onOpen: () => void;
+		private onBlur: () => void;
+		private onClose: () => void;
+		private onFocus: () => void;
+		private onInput: (event: Event) => void;
+		private removeOrganisation: boolean;
+		private titleizePostTown: boolean;
+		private checkKey: boolean;
+		private searchFilters: IdealPostcodes.SearchFilters;
+		private requestIdCounter: number = 0;
+		private lastRequestId: number = 0;
+
+		/**
+		 * Instantiates autocomplete controller
+		 * @param {ControllerOptions} options
+		 */
 		constructor(options: ControllerOptions) {
 			const configAttributes = [
 				"inputField",
@@ -49,7 +64,11 @@ namespace Autocomplete {
 			this.initialiseInterface(options);
 		}
 
-		// Applies client configuration
+		/**
+		 * Configures HTTP client options prior to instantiation
+		 * @private
+		 * @param {IdealPostcodes.BasicOptions} options
+		 */
 		configureApiRequests(options: IdealPostcodes.BasicOptions): void {
 			this.options = {};
 			this.searchFilters = {};
@@ -60,14 +79,32 @@ namespace Autocomplete {
 			});
 		}
 
+		/**
+		 * Produces an instance of `IdealPostcodes.Client`
+		 * @private
+		 * @param {IdealPostcodes.ClientOptions} options
+		 */
 		initialiseClient(options: IdealPostcodes.ClientOptions): void {
 			this.client = new IdealPostcodes.Client(options);
 		}
 
+		/**
+		 * Restrict autocomplete suggestions to certain features (e.g. post town,
+		 * outward postcode)
+		 * @param {IdealPostcodes.SearchFilters} options
+		 * @public
+		 * @example `controller.setSearchFilter({postcode_outward: "SW1A"})`
+		 */
 		setSearchFilter(options: IdealPostcodes.SearchFilters): void {
 			this.searchFilters = options;
 		}
 
+		/**
+		 * Updates an internal list of CSS selectors which will direct the flow of
+		 * addressing information when user selects an address
+		 * @private
+		 * @param {AddressFields} outputFields
+		 */
 		initialiseOutputFields(outputFields: AddressFields): void {
 			const result = {};
 			for (let attr in outputFields) {
@@ -78,6 +115,12 @@ namespace Autocomplete {
 			this.outputFields = result;
 		}
 
+		/**
+		 * Binds any optional callbacks supplied in configuration to controller or
+		 * writes a NOOP if callback not provided
+		 * @private
+		 * @param {CallbackOptions} options
+		 */
 		initialiseCallbacks(options: CallbackOptions): void {
 			const NOOP = () => {};
 			this.onOpen = options.onOpen || NOOP;
@@ -93,7 +136,16 @@ namespace Autocomplete {
 			this.onSuggestionsRetrieved = options.onSuggestionsRetrieved || NOOP;
 		}
 
-		// Checks if key is usable (if enabled). Otherwise attaches interface to DOM
+		/**
+		 * This creates a new instance of `Autocomplete.Interface` and attaches it to the DOM.
+		 *
+		 * Furthermore, Checks if key is usable (if enabled)
+		 *
+		 * This method is invoked upon the instantiation of `Autocomplete.Controller`,
+		 * however it may be used to detach/re-attach new instances of the interface
+		 * @public
+		 * @param {ControllerOptions} options
+		 */
 		initialiseInterface(options: ControllerOptions): void {
 			if (this.checkKey) {
 				this.client.checkKeyUsability(this.options, (error, response) => {
@@ -109,7 +161,12 @@ namespace Autocomplete {
 			}
 		}
 
-		// Executes suggestion search when address input is updated
+		/**
+		 * Produces a function to be bound to an instance of `Autocomplete.Interface`.
+		 * It executes suggestion search when address input is updated
+		 * @private
+		 * @return {any}
+		 */
 		_onInterfaceInput(): any {
 			const self = this;
 			return function (event: Event): any {
@@ -130,7 +187,12 @@ namespace Autocomplete {
 			};
 		}
 
-		// Populates fields with correct address when suggestion selected
+		/**
+		 * Produces a function to be bound to an instance of `Autocomplete.Interface`.
+		 * Populates fields with correct address when suggestion selected
+		 * @private
+		 * @return {any}
+		 */
 		_onInterfaceSelect(): any {
 			const self = this;
 			return function (suggestion: Suggestion): any {
@@ -161,7 +223,12 @@ namespace Autocomplete {
 			};
 		}
 
-		// Adds interface to DOM and applies necessary callbacks
+		/**
+		 * Binds internal instanec of `Autocomplete.Interface` to DOM and applies
+		 * necessary callbacks
+		 * @private
+		 * @param {ControllerOptions} options [description]
+		 */
 		attachInterface(options: ControllerOptions): void {
 			if (this.interface) return;
 			const self = this;
@@ -197,12 +264,21 @@ namespace Autocomplete {
 			this.onLoaded.call(this);
 		}
 
+		/**
+		 * Detaches the autocomplete interaface from the DOM
+		 * @public
+		 */
 		detachInterface(): void {
 			if (!this.interface) return;
 			this.interface.detach();
 			this.interface = null;
 		}
 
+		/**
+		 * Writes a selected to the input fields specified in the controller config
+		 * @public
+		 * @param {AddressFields} address
+		 */
 		populateAddress(address: AddressFields): void {
 			const outputFields = this.outputFields;
 

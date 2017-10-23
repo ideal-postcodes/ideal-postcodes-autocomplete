@@ -17,3 +17,4 @@ tests_output/
 browserstack.err
 local.log
 TESTING.md
+npm-debug.log

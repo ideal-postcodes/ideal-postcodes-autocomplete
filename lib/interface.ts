@@ -1,33 +1,43 @@
 /// <reference path="./utils.ts" />
 /// <reference path="./index.ts" />
 
-/*
- * AUTOCOMPLETE INTERFACE (View)
- *
- * Represents the UI which is injected into the DOM
- *
- * The job of the interface limited to
- * - presenting suggestion supplied by the controller
- * - provides callbacks to the controller for various user interactions
- * - provide methods to manipulate the UI
- */
-
 namespace Autocomplete {
+	/** @hidden */
 	const create = Autocomplete.Utils.create;
 
+	/**
+	 * # Autocomplete.Interface
+	 *
+	 * Represents the user interface which binds to the DOM.
+	 *
+	 * The Interface class is designed to be consumed by an
+	 * `Autocomplete.Controller` instance and should not be accessed directly
+	 * unless absolutely necessary.
+	 *
+	 * The main function of the Interface is to:
+	 * - Present suggestions supplied by the controller
+	 * - Provide callbacks to the controller for various user interactions
+	 * - Provide methods to manipulate the user interface if required
+	 *
+	 * @private
+	 */
 	export class Interface {
-		public suggestions: Suggestion[];
-		public input: HTMLInputElement;
-		public container: HTMLDivElement;
-		public suggestionList: HTMLUListElement;
-		public highlightIndex: number;
-		public onOpen: () => void;
-		public onBlur: () => void;
-		public onClose: () => void;
-		public onFocus: () => void;
-		public onInput: (event: Event) => void;
-		public onSelect: (s: Suggestion) => void;
+		private suggestions: Suggestion[];
+		private input: HTMLInputElement;
+		private container: HTMLDivElement;
+		private suggestionList: HTMLUListElement;
+		private highlightIndex: number;
+		private onOpen: () => void;
+		private onBlur: () => void;
+		private onClose: () => void;
+		private onFocus: () => void;
+		private onInput: (event: Event) => void;
+		private onSelect: (s: Suggestion) => void;
 
+		/**
+		 * Creates an Interface instance
+		 * @param {InterfaceOptions} options
+		 */
 		constructor (options: InterfaceOptions) {
 			this.initialiseInterface(options)
 				.initialiseCallbacks(options)
@@ -35,7 +45,11 @@ namespace Autocomplete {
 				.refresh();
 		}
 
-		// Hooks up interface instance to DOM
+		/**
+		 * Injects user interface into the DOM and initialises internal
+		 * representation for address suggestions
+		 * @private
+		 */
 		initialiseInterface(options: InterfaceOptions): Interface {
 			this.suggestions = [];
 			this.highlightIndex = -1;
@@ -56,7 +70,11 @@ namespace Autocomplete {
 			return this;
 		}
 
-		// Hooks up callbacks to interface instance
+		/**
+		 * Loads callbacks supplied by interface options into private instance
+		 * methods
+		 * @private
+		 */
 		initialiseCallbacks(options: InterfaceCallbacks): Interface {
 			const NOOP = function () {};
 			interfaceCallbacks.forEach(callback => {
@@ -65,7 +83,11 @@ namespace Autocomplete {
 			return this;
 		}
 
-		// Hooks up event listeners to interface
+		/**
+		 * Binds events from input and suggestion (ul) entities to private
+		 * event handlers
+		 * @private
+		 */
 		initialiseEventListeners(options): Interface {
 			this.input.addEventListener("input", this._onInput.bind(this));
 			this.input.addEventListener("blur", this._onBlur.bind(this, "blur"));
@@ -75,20 +97,46 @@ namespace Autocomplete {
 			return this;
 		}
 
+		/**
+		 * Event handler: Fires when focus moves away from input field
+		 * Triggers:
+		 * - `onBlur` callback
+		 * - Closes suggestion list
+		 * @private
+		 */
 		_onBlur(): void {
 			this.onBlur();
 			this.close("blur");
 		}
 
+		/**
+		 * Event handler: Fires when input field is focused
+		 * Triggers:
+		 * - `onFocus` callback
+		 * - Refresh of suggestion list
+		 * @private
+		 */
 		_onFocus(): void {
 			this.onFocus();
 			this.refresh();
 		}
 
+		/**
+		 * Event handler: Fires when input is detected on input fiel
+		 * Triggers:
+		 * - `onInput` callback
+		 * @private
+		 */
 		_onInput(event: Event): void {
 			this.onInput(event);
 		}
 
+		/**
+		 * Event handler: Fires when mousedown on `<li>` HTML Entity
+		 * Triggers:
+		 * - Selection of address suggestion
+		 * @private
+		 */
 		_onMousedown(event: MouseEvent): void {
 			const ul = this.suggestionList;
 			let li = <HTMLUListElement> event.target;
@@ -105,6 +153,16 @@ namespace Autocomplete {
 			}
 		}
 
+		/**
+		 * Event handler: Fires on "keyDown" event of search field
+		 * Triggers:
+		 * - `select` selection of address if key is "Enter"
+		 * - `onInput` callback if key is "Backspace"
+		 * - `close` closing of suggestion list if key is "Esc"
+		 * - `next` highlight next suggestion if key is "Down"
+		 * - `previous` highlight next suggestion if key is "Up"
+		 * @private
+		 */
 		_onKeyDown(event: KeyboardEvent): void {
 			const key = event.keyCode;
 			if (!this.opened()) return;
@@ -124,7 +182,10 @@ namespace Autocomplete {
 			}
 		}
 
-		// Removes interface from DOM
+		/**
+		 * Removes interface from DOM
+		 * @private
+		 */
 		detach(): Interface {
 			this.container.removeChild(this.suggestionList);
 			this.container.parentElement.removeChild(this.container);
@@ -133,7 +194,9 @@ namespace Autocomplete {
 			return this;
 		}
 
-		// Sets message as a list item, no or empty string removes any message
+		/**
+		 * Sets message as a list item, no or empty string removes any message
+		 */
 		setMessage(message?: string): Interface {
 			if (message === undefined || message.length === 0) return this.refresh();
 			this.highlightIndex = -1;
@@ -146,7 +209,9 @@ namespace Autocomplete {
 			return this;
 		}
 
-		// Refreshes interface
+		/**
+		 * Refreshes address suggestion interface
+		 */
 		refresh(): Interface {
 			const suggestions = this.suggestions;
 			this.highlightIndex = -1;
@@ -165,6 +230,11 @@ namespace Autocomplete {
 			return this;
 		}
 
+		/**
+		 * Setter for interface suggestions, which also triggers interface refresh
+		 * @param  {Suggestion[]} suggestions [description]
+		 * @return {Interface}                [description]
+		 */
 		setSuggestions(suggestions: Suggestion[]): Interface {
 			this.suggestions = suggestions;
 			this.refresh();
@@ -268,6 +338,11 @@ namespace Autocomplete {
 		}
 	}
 
+	/**
+	 * List of callbacks implemented by interface
+	 * @readonly
+	 * @hidden
+	 */
 	export const interfaceCallbacks = [
 		"onOpen",
 		"onBlur",
