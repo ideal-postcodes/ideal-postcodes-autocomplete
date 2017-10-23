@@ -303,7 +303,7 @@ namespace Autocomplete {
 	}
 
 	export interface CallbackOptions {
-		/** 
+		/**
 		 * Optional callback. This function is invoked when autocomplete has been
 		 * successfully attached to the input element.
 		 */
@@ -316,21 +316,21 @@ namespace Autocomplete {
 		 */
 		onFailedCheck?: () => void;
 
-		/** 
+		/**
 		 * Optional callback. This function is invoked immediately after address
 		 * suggestions are retrieved from the API. The first argument is an array
 		 * of address suggestions.
 		 */
 		onSuggestionsRetrieved?: (suggestions: Suggestion[]) => void;
 
-		/** 
+		/**
 		 * Optional callback. This function is invoked immediately after the user
 		 * has selected a suggestion (either by click or keypress). The first
-		 * argument is an object which represents the suggestion selected. 
+		 * argument is an object which represents the suggestion selected.
 		 */
 		onAddressSelected?: (suggestion: Suggestion) => void;
 
-		/** 
+		/**
 		 * Optional callback. This function is invoked when the autocomplete client
 		 * has retrieved a full address from the API following a user accepting a
 		 * suggestion. The first argument is an object representing the address
@@ -338,7 +338,7 @@ namespace Autocomplete {
 		 */
 		onAddressRetrieved?: (address: AddressFields) => void;
 
-		/** 
+		/**
 		 * Optional callback. This function is invoked when an error has occurred
 		 * following an attempt to retrieve an address suggestion or full address.
 		 * The first argument is an error instance (i.e. inherits from `Error`)
@@ -346,13 +346,13 @@ namespace Autocomplete {
 		 */
 		onSearchError?: (error: Error) => void;
 
-		/** 
+		/**
 		 * Optional callback. This function is invoked when the suggestion list is
 		 * opened.
 		 */
 		onOpen?: () => void;
 
-		/** 
+		/**
 		 * Optional callback. This function is invoked when focus is removed from
 		 * the address suggestion input field.
 		 */
@@ -364,13 +364,13 @@ namespace Autocomplete {
 		 */
 		onClose?: () => void;
 
-		/** 
+		/**
 		 * Optional callback. This function is invoked when the focus has been
 		 * moved to the address suggestion input field.
 		 */
 		onFocus?: () => void;
 
-		/** 
+		/**
 		 * Optional callback. This function is invoked when the address input
 		 * field has detected a keypress.
 		 */
@@ -395,7 +395,7 @@ namespace Autocomplete {
 		 * This is `false` by default.
 		 */
 		removeOrganisation?: boolean;
-		/** 
+		/**
 		 * An optional field to check whether the key is usable against the Ideal
 		 * Postcodes API. This should be used in conjunction with the
 		 * `onFailedCheck` callback to specify the necessary behaviour when the API

@@ -9,8 +9,8 @@ namespace Autocomplete {
 	 * # Autocomplete.Interface
 	 *
 	 * Represents the user interface which binds to the DOM.
-	 * 
-	 * The Interface class is designed to be consumed by an 
+	 *
+	 * The Interface class is designed to be consumed by an
 	 * `Autocomplete.Controller` instance and should not be accessed directly
 	 * unless absolutely necessary.
 	 *
