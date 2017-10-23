@@ -8,6 +8,7 @@
     "build": "./node_modules/gulp/bin/gulp.js",
     "lint": "./node_modules/gulp/bin/gulp.js lint",
     "ci": "./node_modules/gulp/bin/gulp.js ci",
+    "docs": "./node_modules/.bin/typedoc --mode file --entryPoint 'Autocomplete' --target ES3 --out docs/ --name 'UK Address Autocomplete' --theme minimal --excludePrivate --hideGenerator --excludeExternals lib/",
     "integration_test_server": "./node_modules/gulp/bin/gulp.js test_webserver",
     "test_server": "./node_modules/gulp/bin/gulp.js webserver",
     "integration": "./node_modules/gulp/bin/gulp.js integration"
@@ -61,6 +62,7 @@
     "optimist": "~0.6.1",
     "run-sequence": "~2.1.0",
     "tslint": "~5.7.0",
+    "typedoc": "~0.8.0",
     "typescript": "~2.5.2"
   },
   "homepage": "https://ideal-postcodes.co.uk"
