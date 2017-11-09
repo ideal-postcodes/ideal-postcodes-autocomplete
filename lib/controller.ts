@@ -93,7 +93,7 @@ namespace Autocomplete {
 		 * outward postcode)
 		 * @param {IdealPostcodes.SearchFilters} options
 		 * @public
-		 * @example `controller.setSearchFilter({postcode_outward: "SW1A"})`
+		 * @example `controller.setSearchFilter({postcode_outward: ["SW1A"]})`
 		 */
 		setSearchFilter(options: IdealPostcodes.SearchFilters): void {
 			this.searchFilters = options;
