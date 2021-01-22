@@ -1,3 +1,5 @@
+> **January 2021** Address Autocomplete has moved. Please see our new [Address Finder](https://github.com/ideal-postcodes/address-finder) library
+
 [![npm version](https://badge.fury.io/js/ideal-postcodes-autocomplete.svg)](https://badge.fury.io/js/ideal-postcodes-autocomplete) ![gzip file size](http://img.badgesize.io/ideal-postcodes/ideal-postcodes-autocomplete/master/dist/ideal-postcodes-autocomplete.min.js.svg?compression=gzip) ![file size](http://img.badgesize.io/ideal-postcodes/ideal-postcodes-autocomplete/master/dist/ideal-postcodes-autocomplete.min.js.svg)
 
 # UK Address Autocomplete
